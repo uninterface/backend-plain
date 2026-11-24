@@ -18,9 +18,9 @@ The application installs `@uninterface/backend-plain` under `@uninterface/backen
 
 ## View modules and compatibility
 
-View modules include UiApp, UiContent, UiNavbar, UiForm, UiField, UiTextInput, UiCheckbox, UiRadioGroup, UiCheckboxGroup, UiSelect, UiMenu, UiNavMenu, UiButton, UiLayout, UiRegionLayout and UiIcon. UiFlowLayout and ordinary region composition reuse the linear view; UiGridLayout geometry belongs to core and consumes the backend's spacing export. No eager runtime view registry is installed.
+View modules include UiApp, UiContent, UiNavbar, UiForm, UiField, UiTextInput, UiCheckbox, UiRadioGroup, UiCheckboxGroup, UiSelect, UiMenu, UiNavMenu, UiButton, UiLayout, UiRegionLayout and UiIcon. The `.vue` subpaths resolve to individual compiled ES modules and TypeScript declarations. UiFlowLayout and ordinary region composition reuse the linear view; UiGridLayout geometry belongs to core and consumes the backend's spacing export.
 
-The canonical signatures, slots, events and focus handles are defined by `@uninterface/uninterface/backend` and core's `docs/api/backend/README.md`. Use a matching core source revision: these experimental bindings are not a stable compatibility range. This package's [presentation reference](presentation.md) describes how native integration fulfills them.
+The canonical signatures, slots, events and focus handles are defined by `@uninterface/uninterface/backend` and core's `docs/api/backend/README.md`. Use a Core version supported by Plain's `peerDependencies`. This package's [presentation reference](presentation.md) describes how native integration fulfills the contracts.
 
 Capabilities declare support but do not certify behavior. Unsupported requirements fail core's checks. Tooling and applications must exercise the relevant contracts before claiming browser compatibility.
 

@@ -13,6 +13,9 @@
     "src/",
     "testing/"
   ],
+  "scripts": {
+    "build": "node scripts/build-package.mjs"
+  },
   "exports": {
     ".": "./src/index.ts",
     "./style.css": "./src/style.css",
@@ -30,21 +33,25 @@
     "**/*.css"
   ],
   "dependencies": {
-    "@uninterface/uninterface": "0.0.1",
     "@fontsource-variable/inter": "5.3.0",
     "@fontsource-variable/noto-sans-sc": "5.3.1",
     "@fontsource-variable/noto-sans-tc": "5.3.1"
+  },
+  "peerDependencies": {
+    "@uninterface/uninterface": "~0.0.2",
+    "vue": "^3.5.43"
   },
   "description": "Minimal accessible reference presentation for Uninterface.",
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",
     "@playwright/test": "1.56.1",
-    "@uninterface/testing": "0.0.1",
-    "@uninterface/fonts": "0.0.1",
+    "@uninterface/uninterface": "0.0.2",
     "@vitejs/plugin-vue": "6.0.10",
     "jsdom": "27.4.0",
+    "typescript": "5.9.3",
     "vite": "7.3.7",
-    "vue": "3.5.43"
+    "vue": "3.5.43",
+    "vue-tsc": "3.1.1"
   },
   "uninterface": {
     "testing": {

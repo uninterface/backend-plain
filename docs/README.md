@@ -8,6 +8,7 @@
 | Understand presentation defaults, native mappings and limits | [Presentation and integration](presentation.md) |
 | Customize presentation or check customization limits | [Customization](customization.md) |
 | Inspect assembly exports | [Package exports](exports.md) |
+| Build an npm tarball | [Package build](package-build.md) |
 | Configure application tests or assess backend tests | [Testing](testing.md) |
 | Apply regional presentation preferences | [Strategy support](strategies.md) |
 | Inspect declared support | [Capability manifest](../capabilities.json) |

@@ -8,13 +8,13 @@ Use Vue compatible with core's `^3.5.43` peer dependency, TypeScript with `"modu
 
 ## Select Plain
 
-Plain exports Vue/TypeScript source and declares its matching core version as a dependency. To select published versions in an existing Vue/Vite application, install Plain under the `@uninterface/backend` alias:
+Plain ships compiled ES modules and TypeScript declarations. Core and Vue are peer dependencies. To select Plain in an existing Vue/Vite application, install it under the `@uninterface/backend` alias:
 
 ```sh
-npm install @uninterface/uninterface@0.0.1 @uninterface/backend@npm:@uninterface/backend-plain@0.0.1
+npm install @uninterface/uninterface@0.0.2 @uninterface/backend@npm:@uninterface/backend-plain@0.0.2
 ```
 
-For local source development, resolve `@uninterface/backend` to the Plain checkout and use a matching Core checkout. Backend development tests also use `@uninterface/testing` and `@uninterface/fonts`.
+For local source development, resolve `@uninterface/backend` to the Plain checkout and use a matching Core checkout. The shared development workspace supplies `@uninterface/testing` and `@uninterface/fonts` for backend development tests.
 
 ## Configure Vite
 
@@ -25,7 +25,6 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  resolve: { dedupe: ['vue', '@uninterface/uninterface'] },
 })
 ```
 

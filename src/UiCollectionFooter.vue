@@ -1,13 +1,14 @@
 <script setup lang="ts">
-  import { shallowRef, useSlots } from 'vue'
+  import { shallowRef } from 'vue'
   import {
     useUiZView,
     useUiCollectionFooterLayout,
   } from '@uninterface/uninterface/backend'
   useUiZView()
   const host = shallowRef<HTMLElement>()
-  const slots = useSlots()
   const order = ['info', 'size', 'paginator', 'jumper'] as const
+  const slots =
+    defineSlots<Partial<Record<(typeof order)[number], () => unknown>>>()
   const layout = useUiCollectionFooterLayout(host, order, () =>
     order.filter((part) => Boolean(slots[part])),
   )
