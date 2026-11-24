@@ -1,0 +1,18 @@
+{
+  "name": "uninterface-plain-package-consumer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "vue-tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@uninterface/backend": "file:./backend-plain.tgz",
+    "vue": "3.5.43"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.10",
+    "typescript": "5.9.3",
+    "vite": "7.3.7",
+    "vue-tsc": "3.1.1"
+  }
+}

@@ -1,0 +1,3882 @@
+@import './native-content.css';
+
+:root {
+  color-scheme: light dark;
+  --plain-surface: #fff;
+  --plain-text: #181b20;
+  --plain-muted: #444b55;
+  --plain-border: #545b64;
+  --plain-group-border: #858b93;
+  --plain-focus: #255ea5;
+  --plain-primary: #234e70;
+  --plain-success: #20603d;
+  --plain-danger: #9d1818;
+  --plain-warning: #755100;
+  --plain-info: #125c70;
+  --plain-secondary: #343a40;
+  --plain-on-color: #fff;
+}
+:root[data-ui-color-mode='light'] {
+  color-scheme: light;
+}
+:root[data-ui-color-mode='dark'] {
+  color-scheme: dark;
+  --plain-surface: #181b20;
+  --plain-text: #f3f4f6;
+  --plain-muted: #c2c7cf;
+  --plain-border: #a1a8b3;
+  --plain-group-border: #a1a8b3;
+  --plain-focus: #94c7ff;
+  --plain-primary: #94c7ff;
+  --plain-success: #8ad6a3;
+  --plain-danger: #ffaaaa;
+  --plain-warning: #f4d477;
+  --plain-info: #8dd7e9;
+  --plain-secondary: #d4d8df;
+  --plain-on-color: #181b20;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-ui-color-mode='light']) {
+    --plain-surface: #181b20;
+    --plain-text: #f3f4f6;
+    --plain-muted: #c2c7cf;
+    --plain-border: #a1a8b3;
+    --plain-group-border: #a1a8b3;
+    --plain-focus: #94c7ff;
+    --plain-primary: #94c7ff;
+    --plain-success: #8ad6a3;
+    --plain-danger: #ffaaaa;
+    --plain-warning: #f4d477;
+    --plain-info: #8dd7e9;
+    --plain-secondary: #d4d8df;
+    --plain-on-color: #181b20;
+  }
+}
+
+/* Document typography also reaches content and popups outside UiApp. */
+body {
+  color: var(--plain-text);
+  background: var(--plain-surface);
+  font:
+    16px/1.5 system-ui,
+    sans-serif;
+}
+
+.plain-content {
+  /* Bare text needs the same emergency wrapping as ordinary prose. */
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  display: flow-root;
+  width: 100%;
+  min-width: 0;
+  padding: 1rem;
+  min-height: 0;
+}
+.plain-content[data-inset='none'] {
+  padding: 0;
+}
+
+.plain-navbar {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  color: var(--plain-text);
+  background: var(--plain-surface);
+  border-bottom: 1px solid var(--plain-border);
+}
+.plain-navbar-brand,
+.plain-navbar-links,
+.plain-navbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.plain-navbar-brand {
+  font-weight: 700;
+}
+.plain-navbar-links {
+  flex: 1 1 auto;
+}
+.plain-navbar-actions {
+  margin-inline-start: auto;
+}
+.plain-navbar a {
+  color: inherit;
+}
+.plain-navbar a[aria-current]:not([aria-current='false']) {
+  font-weight: 700;
+}
+.plain-navbar :focus-visible {
+  outline: 2px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+@media (forced-colors: active) {
+  .plain-navbar :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+.plain-app {
+  color: var(--plain-text);
+  background: var(--plain-surface);
+
+  box-sizing: border-box;
+  display: flow-root;
+  width: 100%;
+  min-width: 0;
+}
+
+.plain-form {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--plain-border);
+  padding: 1.25rem;
+}
+.plain-field {
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+}
+.plain-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.plain-input,
+.plain-select {
+  all: revert;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  background: var(--plain-surface);
+  color: var(--plain-text);
+  border: 1px solid var(--plain-border);
+  border-radius: 0;
+  font: inherit;
+}
+.plain-checkbox {
+  all: revert;
+  box-sizing: border-box;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  accent-color: var(--plain-text);
+}
+.plain-button {
+  all: revert;
+  box-sizing: border-box;
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--plain-surface);
+  color: var(--plain-color);
+  border: 1px solid var(--plain-color);
+  border-radius: 0;
+  font: inherit;
+  cursor: pointer;
+}
+/* The theme maps roles to colors; treatment is a separate axis. */
+.plain-color-primary {
+  --plain-color: var(--plain-primary);
+}
+.plain-color-success {
+  --plain-color: var(--plain-success);
+}
+.plain-color-danger {
+  --plain-color: var(--plain-danger);
+}
+.plain-color-warning {
+  --plain-color: var(--plain-warning);
+}
+.plain-color-info {
+  --plain-color: var(--plain-info);
+}
+.plain-color-secondary {
+  --plain-color: var(--plain-secondary);
+}
+.plain-variant-filled {
+  background: var(--plain-color);
+  color: var(--plain-on-color);
+}
+/* Underlining belongs to visible action labels, not icon-only glyphs. */
+.plain-button:hover:not(
+    :disabled,
+    .plain-variant-icon,
+    .plain-multiselect-clear,
+    .plain-modal-close,
+    .plain-notice-close
+  ) {
+  text-decoration: underline;
+}
+.plain-button:active:not(:disabled) {
+  border-style: double;
+}
+:is(.plain-input, .plain-select, .plain-checkbox, .plain-button):disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.plain-help {
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0;
+  color: var(--plain-muted);
+}
+.plain-field-feedback {
+  margin-block: 0.25rem 0;
+}
+.plain-issue {
+  margin: 0;
+  font-weight: 650;
+  color: var(--plain-danger);
+}
+fieldset.plain-field {
+  min-inline-size: 0;
+  padding: 0;
+  border: 0;
+}
+:is(.plain-input, .plain-select, .plain-checkbox).plain-invalid {
+  border: 2px solid var(--plain-danger);
+}
+:is(
+  .plain-input,
+  .plain-select,
+  .plain-checkbox,
+  .plain-button,
+  .plain-field
+):focus-visible,
+.plain-form:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+.plain-required {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+@media (forced-colors: active) {
+  :is(
+    .plain-input,
+    .plain-select,
+    .plain-checkbox,
+    .plain-button,
+    .plain-field
+  ):focus-visible,
+  .plain-form:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+legend.plain-label {
+  padding: 0;
+}
+
+.plain-layout {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+  align-content: start;
+  justify-content: start;
+}
+.plain-layout-item {
+  min-width: 0;
+  min-height: 0;
+}
+.plain-layout:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  .plain-layout:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+.plain-button-indicator {
+  display: inline-block;
+  width: 1em;
+  margin-inline-end: 0.35em;
+}
+.plain-button-status,
+.plain-select-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.plain-button-indicator::before {
+  content: '◌';
+}
+
+.plain-app-viewport {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Keep the persistent announcement local even inside an unpositioned scrollport. */
+.plain-button-host {
+  position: relative;
+  display: inline-flex;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  vertical-align: baseline;
+}
+.plain-button-host > button {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+/* A direct table action aligns within the cell line; authored baseline layouts
+   continue to receive the host's caption baseline. */
+.plain-table-cell-content > .plain-button-host {
+  vertical-align: middle;
+}
+.plain-button-status,
+.plain-button-label-hidden {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+.plain-region-host {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  gap: 0;
+}
+.plain-region-scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: 0;
+}
+.plain-region-retained,
+.plain-region-item {
+  min-width: 0;
+}
+.plain-region-host:focus-visible,
+.plain-region-scroll:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  .plain-region-host:focus-visible,
+  .plain-region-scroll:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+.plain-entry-list {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  min-width: 0;
+}
+.plain-entry-surface {
+  box-sizing: border-box;
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid CanvasText;
+  border-radius: 0.25rem;
+  max-width: 100%;
+}
+.plain-entry-popup {
+  box-sizing: border-box;
+  padding: 0;
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid CanvasText;
+  position: fixed;
+  margin: 0;
+  inset: auto;
+  max-width: 100vw;
+  max-height: 100dvh;
+  overflow: auto;
+  min-width: min(16rem, 100vw);
+}
+.plain-entry-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.plain-entry-item:hover,
+.plain-entry-item[aria-current] {
+  background: ButtonFace;
+}
+.plain-entry-item:focus-visible,
+.plain-entry-target:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: -2px;
+}
+.plain-entry-item[aria-disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+.plain-entry-copy {
+  flex: 1;
+  min-width: 0;
+}
+.plain-entry-copy small {
+  display: block;
+}
+.plain-entry-check {
+  display: inline-block;
+  width: 1em;
+  flex: 0 0 1em;
+}
+.plain-entry-icon {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 1em;
+}
+.plain-entry-group-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+.plain-entry-separator {
+  border: 0;
+  border-top: 1px solid CanvasText;
+}
+.plain-entry-status {
+  padding: 0.5rem;
+}
+.plain-entry-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.plain-entry-navigation .plain-entry-list {
+  display: block;
+}
+@media (forced-colors: active) {
+  .plain-entry-item:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+/* Editor and associated field parts receive size independently at their logical nodes. */
+:is(
+  .plain-input,
+  .plain-input-frame,
+  .plain-select,
+  .plain-button
+).plain-size-small {
+  min-height: 2.25rem;
+  padding-block: 0.25rem;
+  font-size: 0.875rem;
+}
+:is(
+  .plain-input,
+  .plain-input-frame,
+  .plain-select,
+  .plain-button
+).plain-size-large {
+  min-height: 3.25rem;
+  padding-block: 0.75rem;
+  font-size: 1.125rem;
+}
+.plain-checkbox.plain-size-small {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.plain-checkbox.plain-size-large {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.plain-strategy-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (min-width: 40rem) {
+  .plain-field.plain-labels-beside {
+    display: grid;
+    grid-template-columns: minmax(7rem, 1fr) minmax(0, 3fr);
+    column-gap: 1rem;
+    align-items: start;
+  }
+  .plain-labels-beside > .plain-field-editor,
+  .plain-labels-beside > .plain-help,
+  .plain-labels-beside > .plain-field-feedback {
+    grid-column: 2;
+  }
+  .plain-labels-beside > .plain-label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .plain-labels-beside[data-ui-label-align='near'] > .plain-label {
+    text-align: end;
+  }
+}
+
+.plain-field-size-small > .plain-label,
+.plain-field-size-small > .plain-field-feedback {
+  font-size: 0.875rem;
+}
+.plain-field-size-large > .plain-label,
+.plain-field-size-large > .plain-field-feedback {
+  font-size: 1.125rem;
+}
+.plain-field-size-small > .plain-help {
+  font-size: 0.75rem;
+}
+.plain-field-size-large > .plain-help {
+  font-size: 1rem;
+}
+
+.plain-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.plain-variant-soft {
+  background: color-mix(in srgb, var(--plain-color) 12%, var(--plain-surface));
+  border-color: transparent;
+}
+.plain-variant-text,
+.plain-variant-icon {
+  background: transparent;
+  border-color: transparent;
+}
+:is(.plain-variant-text, .plain-variant-icon):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--plain-color) 10%, var(--plain-surface));
+}
+.plain-variant-icon {
+  aspect-ratio: 1;
+  padding-inline: 0.5rem;
+}
+.plain-button-label-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.plain-button-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.plain-variant-icon:has(> .plain-button-icon [data-ui-icon-sized]) {
+  min-inline-size: min-content;
+  position: relative;
+}
+.plain-variant-icon[aria-busy='true']:has(
+    > .plain-button-icon [data-ui-icon-sized]
+  )
+  > .plain-button-icon {
+  visibility: hidden;
+}
+.plain-variant-icon:has(> .plain-button-icon [data-ui-icon-sized])
+  > .plain-button-indicator {
+  position: absolute;
+  margin-inline-end: 0;
+  text-align: center;
+}
+
+/* Portable card treatments adapt native theme values; no descendant control styling. */
+.plain-card[data-card-top-end] {
+  position: relative;
+}
+.plain-card-top-end {
+  position: absolute;
+  inset-block-start: calc(var(--plain-card-padding) / 2);
+  inset-inline-end: calc(var(--plain-card-padding) / 2);
+  max-inline-size: calc(100% - var(--plain-card-padding));
+}
+.plain-card {
+  font-size: 1rem;
+  --plain-card-separator-style: solid;
+  --plain-card-padding: 1rem;
+  --plain-card-title-size: 1.125rem;
+  --plain-card-base: var(--plain-surface);
+  --plain-card-tint: color-mix(
+    in srgb,
+    var(--plain-card-accent) 10%,
+    var(--plain-card-base)
+  );
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  overflow: visible;
+  border: 1px solid var(--plain-card-accent);
+  background: var(--plain-card-base);
+  color: var(--plain-text);
+}
+.plain-card {
+  border-radius: 0.375rem;
+}
+.plain-card[data-card-density='roomy'] {
+  --plain-card-padding: 1.5rem;
+}
+.plain-card[data-card-density='compact'] {
+  --plain-card-padding: 0.625rem;
+}
+.plain-card[data-card-title-size='large'] {
+  --plain-card-title-size: 1.375rem;
+}
+.plain-card[data-card-title-size='small'] {
+  --plain-card-title-size: 1rem;
+}
+.plain-card[data-card-surface='tinted'] {
+  background: var(--plain-card-tint);
+}
+.plain-card[data-card-border='dashed'] {
+  --plain-card-separator-style: dashed;
+  border-style: dashed;
+}
+.plain-card[data-card-border='dotted'] {
+  --plain-card-separator-style: dotted;
+  border-style: dotted;
+}
+.plain-card[data-card-border='double'] {
+  border-style: double;
+  border-width: 3px;
+}
+.plain-card > .plain-card-header,
+.plain-card > .plain-card-body,
+.plain-card > .plain-card-footer {
+  min-width: 0;
+  padding: var(--plain-card-padding);
+  overflow: visible;
+}
+/* An explicitly arranged body owns its insets; nested content stays intact. */
+.plain-card[data-card-body='layout'] > .plain-card-body {
+  padding: 0;
+}
+.plain-card > .plain-card-header {
+  border: 0;
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+  background: transparent;
+  color: inherit;
+}
+.plain-card[data-card-header='band'] > .plain-card-header {
+  background: var(--plain-card-tint);
+  border-block-end: 1px var(--plain-card-separator-style)
+    var(--plain-card-accent);
+}
+.plain-card[data-card-header='plain'] > .plain-card-header {
+  padding-block-end: 0;
+}
+.plain-card > .plain-card-footer {
+  border-block-start: 1px solid var(--plain-card-accent);
+  background: transparent;
+  color: inherit;
+}
+.plain-card-title {
+  font-size: var(--plain-card-title-size);
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+/* Only headings explicitly supplied to the title slot adopt its presentation. */
+.plain-card-title > :where(h1, h2, h3, h4, h5, h6) {
+  font: inherit;
+  margin: 0;
+}
+.plain-card-description {
+  font-size: 0.875rem;
+  margin-block-start: 0.25rem;
+}
+.plain-card[data-card-elevation='raised'] {
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--plain-text) 18%, transparent);
+}
+.plain-card[data-card-elevation='flat'] {
+  box-shadow: none;
+}
+
+/* Adapt only the existing footer separator pattern; native color/width stay intact. */
+.plain-card > .plain-card-footer {
+  border-block-start-style: var(--plain-card-separator-style);
+}
+
+/* Explicit footer treatment: quieter text without fading the surface or controls. */
+.plain-card[data-card-footer='muted'] > .plain-card-footer {
+  color: var(--plain-muted);
+  font-size: 0.875rem;
+}
+
+/* Controls own their type scale, including when placed in a smaller card footer. */
+:is(.plain-input, .plain-select, .plain-button) {
+  font-size: 1rem;
+}
+
+/* Opt-in focus presentation for author-supplied elements. */
+.plain-focus-presentation {
+  border-radius: 0.375rem;
+}
+.plain-focus-presentation:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+@media (forced-colors: active) {
+  .plain-focus-presentation:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+/* Allocation framing stays outside each region's scrolling content. */
+.plain-layout {
+  --plain-layout-separator-size: 1px;
+  --plain-layout-handle-size: 0.5rem;
+}
+.plain-layout-item[data-raised] {
+  background: var(--plain-surface);
+}
+/* Boundary emphasis never changes the elevation recipe. */
+.plain-layout [data-boundary-role] {
+  --plain-layout-boundary-color: var(--plain-border);
+}
+.plain-layout [data-boundary-role='start'] {
+  --plain-layout-boundary-color: var(--plain-text);
+}
+.plain-layout-separator {
+  background: var(--plain-layout-boundary-color);
+  align-self: stretch;
+  justify-self: stretch;
+}
+.plain-layout-resizer {
+  background: var(--plain-surface);
+  position: relative;
+  align-self: stretch;
+  justify-self: stretch;
+  touch-action: none;
+  user-select: none;
+}
+.plain-layout-resizer::before {
+  content: '';
+  position: absolute;
+  background: var(--plain-layout-boundary-color);
+}
+.plain-layout-resizer[aria-orientation='vertical'] {
+  cursor: col-resize;
+}
+.plain-layout-resizer[aria-orientation='horizontal'] {
+  cursor: row-resize;
+}
+.plain-layout-resizer[aria-orientation='vertical']::before {
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: var(--plain-layout-separator-size);
+}
+.plain-layout-resizer[aria-orientation='horizontal']::before {
+  inset-inline: 0;
+  inset-block-start: 50%;
+  height: var(--plain-layout-separator-size);
+}
+@media (forced-colors: active) {
+  .plain-layout-separator,
+  .plain-layout-resizer::before {
+    background: CanvasText;
+  }
+}
+
+/* Only this absolute decoration is size-contained. Content and focus are not clipped.
+   Rotate the native shadow plane, swapping its dimensions, so its bottom-facing
+   recipe points toward the lower neighbour on every side. */
+.plain-layout-edge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  container-type: size;
+}
+.plain-layout-edge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: var(--plain-layout-separator-size) solid
+    var(--plain-layout-boundary-color);
+}
+.plain-layout-edge[data-resizable]::after {
+  display: none;
+}
+.plain-layout-edge-shadow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100cqw;
+  height: 100cqh;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--plain-text) 18%, transparent);
+}
+.plain-layout-edge[data-direction='vertical'][data-edge='before'] {
+  clip-path: inset(
+    -100vmax 0 calc(100% - var(--plain-layout-separator-size)) 0
+  );
+}
+.plain-layout-edge[data-direction='vertical'][data-edge='before']
+  > .plain-layout-edge-shadow {
+  transform: translate(-50%, -50%) scaleY(-1);
+}
+.plain-layout-edge[data-direction='vertical'][data-edge='after'] {
+  clip-path: inset(
+    calc(100% - var(--plain-layout-separator-size)) 0 -100vmax 0
+  );
+}
+.plain-layout-edge[data-direction='horizontal'] > .plain-layout-edge-shadow {
+  width: 100cqh;
+  height: 100cqw;
+}
+.plain-layout-edge[data-direction='horizontal'][data-edge='before']:dir(ltr),
+.plain-layout-edge[data-direction='horizontal'][data-edge='after']:dir(rtl) {
+  clip-path: inset(
+    0 calc(100% - var(--plain-layout-separator-size)) 0 -100vmax
+  );
+}
+.plain-layout-edge[data-direction='horizontal'][data-edge='before']:dir(ltr)
+  > .plain-layout-edge-shadow,
+.plain-layout-edge[data-direction='horizontal'][data-edge='after']:dir(rtl)
+  > .plain-layout-edge-shadow {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.plain-layout-edge[data-direction='horizontal'][data-edge='after']:dir(ltr),
+.plain-layout-edge[data-direction='horizontal'][data-edge='before']:dir(rtl) {
+  clip-path: inset(
+    0 -100vmax 0 calc(100% - var(--plain-layout-separator-size))
+  );
+}
+.plain-layout-edge[data-direction='horizontal'][data-edge='after']:dir(ltr)
+  > .plain-layout-edge-shadow,
+.plain-layout-edge[data-direction='horizontal'][data-edge='before']:dir(rtl)
+  > .plain-layout-edge-shadow {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+@media (forced-colors: active) {
+  .plain-layout-edge::after {
+    border-color: CanvasText;
+  }
+  .plain-layout-edge-shadow {
+    box-shadow: none !important;
+  }
+}
+
+/* The native top layer owns modality; this adapter owns the dialog surface. */
+.plain-modal {
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  max-block-size: calc(100dvh - 2rem);
+  overflow: visible;
+  margin: auto;
+}
+.plain-modal::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+.plain-modal-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.plain-modal-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  inline-size: 2.75rem;
+}
+.plain-modal-close > svg {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+.plain-modal-heading h2 {
+  margin: 0;
+}
+.plain-modal-surface {
+  display: flex;
+  flex-direction: column;
+  max-block-size: calc(100dvh - 2rem);
+  background: var(--plain-surface, Canvas);
+  color: var(--plain-text, CanvasText);
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+}
+.plain-modal-header,
+.plain-modal-footer {
+  flex: none;
+  padding: 1rem;
+}
+.plain-modal-header,
+.plain-modal-footer {
+  position: relative;
+  background-color: inherit;
+}
+.plain-modal-header {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+.plain-modal-footer {
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+}
+
+.plain-modal-body {
+  min-block-size: 0;
+  overflow: auto;
+  padding: 1rem;
+}
+
+/* Read-only record definitions retain semantic terms and rich values. */
+.plain-key-value-list {
+  margin: 0;
+  min-width: 0;
+}
+.plain-key-value-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 0.5em 1rem;
+  padding-block: 0.5em;
+}
+.plain-key-value-item > dt {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.plain-key-value-item > dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 40rem) {
+  .plain-key-value-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25em;
+  }
+}
+
+.plain-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border: 1px solid var(--plain-notice-color);
+  border-inline-start-width: 0.3rem;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+  background: var(--plain-surface);
+  color: var(--plain-text);
+}
+.plain-notice-title {
+  display: block;
+  margin-block-end: 0.5em;
+}
+.plain-notice-content {
+  flex: 1;
+  min-inline-size: 0;
+}
+.plain-notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-start: 0.75em;
+}
+.plain-notice-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+.plain-notice-close > svg {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+.plain-badge {
+  display: inline-block;
+  border: 1px solid currentColor;
+  border-radius: 0.25em;
+  padding: 0.1em 0.4em;
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.plain-tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+.plain-tabs[data-orientation='vertical'] > .plain-tab-list {
+  flex-direction: column;
+}
+.plain-tab-panel {
+  min-width: 0;
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+.plain-tab-panel[hidden],
+.plain-collapsible-panel[hidden] {
+  display: none;
+}
+.plain-collapsible {
+  min-width: 0;
+  border-block-end: 1px solid var(--plain-border);
+}
+.plain-collapsible-panel {
+  padding-block: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.plain-tab,
+.plain-collapsible-trigger {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+}
+.plain-tab {
+  border-block-end-color: var(--plain-border);
+}
+.plain-tab.is-selected {
+  color: var(--plain-primary);
+  border-block-end: 3px solid currentColor;
+  font-weight: 600;
+}
+.plain-tab:disabled,
+.plain-collapsible-trigger[aria-disabled='true'] {
+  cursor: default;
+  color: var(--plain-muted);
+  border-style: dashed;
+}
+
+.plain-collapsible-trigger:focus-visible {
+  outline: 2px solid var(--plain-primary);
+  outline-offset: 2px;
+}
+
+.plain-tab-list [role='tab'] {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Modal action sequence starts at inline-end; text direction is inherited. */
+.plain-footer-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  inline-size: 100%;
+}
+
+/* Consume the selected set; an application override takes precedence. */
+:root,
+body,
+[lang] {
+  --plain-font-family: var(
+    --uninterface-font-family,
+    var(--uninterface-font-set-family, system-ui, sans-serif)
+  );
+}
+
+:root,
+body,
+[lang]:where(:not(code, pre, kbd, samp)) {
+  font-family: var(--plain-font-family);
+}
+
+/* Scroll hosts own an inward indicator; descendant clearance is inside their padding. */
+.plain-scroll-focus:focus-visible,
+.plain-content[data-scroll]:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: calc(-1 * 3px);
+}
+.plain-tab-panel:focus-visible {
+  outline-offset: calc(-1 * 3px);
+}
+@media (forced-colors: active) {
+  .plain-scroll-focus:focus-visible,
+  .plain-content[data-scroll]:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
+
+.plain-modal-body:focus-visible {
+  outline-offset: calc(-1 * 3px);
+}
+
+/* Unpadded scrolling preserves alignment by containing focus paint, not adding
+   a content gutter. A padded surface starts its own native presentation context. */
+.plain-content[data-inset='none'][data-scroll],
+.plain-layout[data-scroll],
+.plain-scroll-focus,
+.plain-region-scroll {
+  --plain-contained-focus-offset: calc(-1 * 3px);
+}
+.plain-content:not([data-inset='none']),
+.plain-card,
+.plain-modal {
+  --plain-contained-focus-offset: initial;
+}
+
+/* One stable field rectangle: scrolling choices and an inset clear action. */
+.plain-multiselect {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.75rem;
+  align-items: start;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--plain-border);
+  background: var(--plain-surface);
+}
+.plain-multiselect-list {
+  grid-column: 1;
+  grid-row: 1;
+  height: 8rem;
+  min-width: 0;
+  border: 0;
+}
+.plain-multiselect-clear {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  margin-top: 0.375rem;
+  width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.plain-checkable-field {
+  --plain-checkable-height: 1.5rem;
+  --plain-checkable-text-size: 1rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.5rem;
+  align-items: start;
+}
+.plain-checkable-field.plain-field-size-small {
+  --plain-checkable-height: 1.25rem;
+  --plain-checkable-text-size: 0.875rem;
+}
+.plain-checkable-field.plain-field-size-large {
+  --plain-checkable-height: 1.75rem;
+  --plain-checkable-text-size: 1.125rem;
+}
+.plain-checkable-field:has(> .plain-field-editor > .plain-switch) {
+  --plain-checkable-height: calc(1.4 * var(--plain-checkable-text-size));
+}
+.plain-checkable-field > .plain-field-editor {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  font-size: var(--plain-checkable-text-size);
+  min-block-size: 1.5em;
+}
+.plain-checkable-field
+  > .plain-field-editor
+  > :is(.plain-checkbox, .plain-switch) {
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
+}
+.plain-checkable-field > .plain-label {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  line-height: 1.5;
+  padding-block-start: max(
+    0px,
+    calc((var(--plain-checkable-height) - 1lh) / 2)
+  );
+}
+.plain-checkable-field > .plain-help,
+.plain-checkable-field > .plain-field-feedback {
+  grid-column: 2;
+}
+.plain-switch {
+  appearance: none;
+  box-sizing: border-box;
+  font: inherit;
+  inline-size: 2.5em;
+  block-size: 1.4em;
+  border: 1px solid currentColor;
+  border-radius: 1em;
+  background: var(--plain-surface);
+  color: var(--plain-text);
+  cursor: pointer;
+  vertical-align: middle;
+}
+.plain-switch::before {
+  content: '';
+  display: block;
+  inline-size: 1em;
+  block-size: 1em;
+  margin: 0.14em;
+  border-radius: 50%;
+  background: currentColor;
+}
+.plain-switch:checked {
+  color: var(--plain-primary);
+}
+.plain-switch:checked::before {
+  margin-inline-start: 1.25em;
+}
+.plain-switch:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.plain-switch:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+[data-password-reveal] svg {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+.plain-reveal {
+  border: 1px solid var(--plain-border);
+  background: var(--plain-surface);
+  color: var(--plain-text);
+  padding: 0.5em;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.plain-reveal:focus-visible {
+  outline: 2px solid var(--plain-focus);
+  outline-offset: 2px;
+}
+
+.plain-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+.plain-breadcrumbs > li + li::before {
+  content: '/';
+  margin-inline-end: 0.5rem;
+  color: var(--plain-muted);
+}
+.plain-link[aria-disabled='true'] {
+  color: var(--plain-muted);
+  cursor: default;
+}
+
+.plain-tooltip {
+  box-sizing: border-box;
+  max-inline-size: min(24rem, calc(100vw - 1rem));
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--plain-border);
+  border-radius: 0.25rem;
+  background: var(--plain-text);
+  color: var(--plain-surface);
+  box-shadow: 0 2px 8px #0003;
+  overflow-wrap: anywhere;
+}
+
+.plain-suggestions {
+  box-sizing: border-box;
+  background: var(--plain-surface);
+  color: var(--plain-text);
+  border: 1px solid var(--plain-border);
+  border-radius: 0.25rem;
+  max-width: calc(100vw - 1rem);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--plain-text) 18%, transparent);
+}
+.plain-suggestions > ul {
+  max-block-size: 18rem;
+  overflow: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plain-suggestions [role='option'],
+.plain-suggestions-status {
+  padding: 0.5rem 0.75rem;
+  overflow-wrap: anywhere;
+}
+.plain-suggestions [role='option'] {
+  cursor: pointer;
+}
+.plain-suggestions-status {
+  color: var(--plain-muted);
+}
+.plain-suggestions-status-update {
+  border-block-start: 1px solid var(--plain-group-border);
+  font-size: 0.875em;
+}
+.plain-suggestions [role='option'][aria-selected='true'] {
+  background: var(--plain-primary);
+  color: var(--plain-on-color);
+}
+.plain-suggestions [aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.plain-file-input {
+  min-inline-size: 0;
+}
+.plain-file-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin: 0;
+  text-align: center;
+}
+.plain-file-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  max-inline-size: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.plain-file-icon > * {
+  inline-size: 100%;
+  block-size: 100%;
+}
+.plain-file-icon > [data-file-thumbnail] {
+  object-fit: contain;
+  overflow: hidden;
+}
+.plain-file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  line-height: 1.25;
+}
+.plain-file-preview-name {
+  flex: 0 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plain-file-size {
+  font-size: 0.875em;
+}
+.plain-file-preview[data-presentation='row'] {
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: start;
+}
+.plain-file-preview[data-presentation='row'] > .plain-file-icon {
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+}
+.plain-file-preview[data-presentation='row'] .plain-file-details {
+  flex: 1 1 auto;
+}
+.plain-file-preview[data-presentation='row'] .plain-file-preview-name {
+  font-weight: 600;
+}
+.plain-file-collection {
+  list-style: none;
+  padding: 0;
+}
+
+.plain-temporal-editor {
+  min-inline-size: 0;
+}
+
+.plain-temporal-boundary {
+  min-inline-size: 0;
+}
+
+.plain-input-frame {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  min-inline-size: 0;
+}
+.plain-input-frame:focus-within {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+.plain-input-frame[aria-disabled='true'] {
+  opacity: 0.65;
+}
+/* Immediate action slots fit the input row; unrelated nested controls retain
+   their own sizing. The frame's chosen type scale also sizes its actions. */
+.plain-button-host[data-ui-control-frame='parent'] > .plain-button {
+  min-height: 0;
+  min-block-size: 1.5em;
+  padding: 0 0.25em;
+  font: inherit;
+  line-height: 1;
+}
+.plain-button-host[data-ui-control-frame='parent']
+  > .plain-button:focus-visible {
+  outline-offset: -2px;
+}
+
+/* A native chooser overlays the visible trigger/name; its focus belongs to the frame. */
+.plain-file-input {
+  inline-size: 100%;
+}
+.plain-file-chooser {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+.plain-file-name {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plain-file-chooser > input[type='file'] {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.plain-file-chooser > input:disabled {
+  cursor: default;
+}
+
+/* One surface owns scalar text/picker/reveal geometry; actions fit its content row. */
+.plain-text-surface {
+  display: flex;
+  /* Let align-content center the editable baseline within minimum-height space. */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  min-inline-size: 0;
+}
+.plain-text-editor {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  flex: 1 1 0;
+  inline-size: 0;
+  min-inline-size: 0;
+}
+.plain-text-editor:focus {
+  outline: none;
+}
+.plain-text-surface:not(.plain-text-multiline):focus-within {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+.plain-text-disabled {
+  opacity: 0.65;
+}
+.plain-input-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  inline-size: 1.5em;
+  block-size: 1.5em;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+.plain-input-action:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+.plain-input-action:focus-visible {
+  outline: 2px solid var(--plain-focus);
+  outline-offset: -2px;
+}
+.plain-input-action svg {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+/* Native editors retain their intrinsic segment/indicator space; spare
+   allocation belongs after the range, not between endpoints. */
+/* Measure the offered width without size containment: Chromium's query-host
+   subtree can lose layout when an invalid draft replaces a native editor. */
+.plain-temporal-host {
+  min-inline-size: 0;
+}
+.plain-input-frame[data-temporal-range] {
+  flex-wrap: nowrap;
+}
+.plain-temporal-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+.plain-temporal-boundary {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+}
+.plain-temporal-range .plain-text-surface {
+  inline-size: max-content;
+  max-inline-size: 100%;
+}
+.plain-temporal-range .plain-text-editor {
+  flex: 0 1 auto;
+  inline-size: auto;
+  max-inline-size: 100%;
+}
+.plain-temporal-spacer {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+/* Keep both endpoint positions, including the separator, on narrow surfaces. */
+.plain-temporal-range[data-stacked] {
+  display: grid;
+  grid-template-columns: auto minmax(0, max-content);
+  grid-auto-rows: minmax(1.5em, auto);
+}
+.plain-temporal-range[data-stacked] > [data-side='start'] {
+  grid-column: 2;
+}
+
+.plain-text-surface[data-ui-control-frame='parent'] {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-block-size: 0;
+}
+.plain-input-frame[aria-disabled='true']
+  .plain-text-surface[data-ui-control-frame='parent'].plain-text-disabled {
+  opacity: 1;
+}
+.plain-text-surface[data-ui-control-frame='parent']:focus-within {
+  outline: none;
+}
+.plain-input-frame[data-engaged] {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+
+/* Native date/time fields keep the browser indicator inside the shared surface. */
+.plain-temporal-native {
+  color-scheme: inherit;
+  min-block-size: 1.5em;
+}
+
+.plain-text-surface[data-ui-control-frame='parent'] > textarea {
+  border: 0;
+  background: transparent;
+  outline: none;
+  padding: 0;
+}
+
+/* A visible symbol sits over the native select. The select keeps all pointer,
+   keyboard, accessible-name and platform-menu behavior, with full option labels. */
+/* The enclosing surface already owns padding. Chromium's native edit wrapper
+   otherwise adds a second vertical inset which changes range rows on mode switch. */
+.plain-temporal-native::-webkit-datetime-edit,
+.plain-temporal-native::-webkit-datetime-edit-fields-wrapper {
+  padding-block: 0;
+}
+
+.plain-temporal-mode {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  inline-size: 2.5em;
+  block-size: 1.5em;
+}
+.plain-temporal-mode-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  pointer-events: none;
+}
+.plain-temporal-mode-display > span {
+  font-size: 0.75em;
+}
+.plain-temporal-mode-select {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  font: inherit;
+  opacity: 0;
+  cursor: pointer;
+}
+.plain-temporal-mode:focus-within {
+  outline: 2px solid var(--plain-focus);
+  outline-offset: -2px;
+}
+.plain-temporal-mode[data-disabled] {
+  opacity: 0.65;
+}
+.plain-temporal-mode-select:disabled {
+  cursor: default;
+}
+[data-temporal-next-day] {
+  display: inline-flex;
+  flex: 0 0 auto;
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+/* Failure paint belongs to the editor surface, never the label/help wrapper.
+   Keep focus visible in the same error tone, including composed input frames. */
+:is(.plain-input, .plain-select, .plain-checkbox).plain-invalid:focus-visible,
+.plain-text-surface.plain-invalid:focus-within,
+.plain-input-frame.plain-input-frame-invalid:focus-within,
+.plain-input-frame.plain-input-frame-invalid[data-engaged] {
+  outline-color: var(--plain-danger);
+}
+@media (forced-colors: active) {
+  :is(.plain-input, .plain-select, .plain-checkbox).plain-invalid:focus-visible,
+  .plain-text-surface.plain-invalid:focus-within,
+  .plain-input-frame.plain-input-frame-invalid:focus-within,
+  .plain-input-frame.plain-input-frame-invalid[data-engaged] {
+    outline-color: Highlight;
+  }
+}
+
+/* Notice variants use the same semantic palette as ordinary Plain controls. */
+.plain-notice[data-variant='soft'] {
+  background: color-mix(
+    in srgb,
+    var(--plain-notice-color) 10%,
+    var(--plain-surface)
+  );
+}
+.plain-notice[data-variant='filled'] {
+  background: var(--plain-notice-color);
+  color: var(--plain-on-color);
+}
+.plain-notice[data-variant='outline'] {
+  background: transparent;
+  color: var(--plain-notice-color);
+}
+.plain-notice[data-variant='filled'] .plain-notice-close {
+  color: inherit;
+  border-color: currentColor;
+  background: transparent;
+}
+.plain-notice-icon {
+  display: inline-flex;
+  flex: 0 0 1.25em;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+}
+.plain-notice-icon > * {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Ordinary rich-content links remain readable on filled notices; explicit link components retain their own presentation. */
+.plain-notice[data-variant='filled'] :where(a[href]:not([class])) {
+  color: inherit;
+}
+
+/* UiField owns editor accessibility helpers. Keep their absolute boxes local
+   to this required composition, including when the field is deep in a scrollport.
+   Clip the helper itself; retain visible focus and popup overflow on the field. */
+.plain-field {
+  position: relative;
+}
+.plain-select-status,
+.plain-strategy-hidden {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+.plain-entry-navigation.plain-navigation-vertical {
+  display: block;
+}
+.plain-navigation-tree .plain-navigation-tree {
+  padding-inline-start: 1rem;
+}
+.plain-entry-item[data-current-ancestor] {
+  background: ButtonFace;
+}
+.plain-entry-item {
+  position: relative;
+}
+.plain-navigation-hidden-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.plain-entry-navigation.plain-navigation-rail {
+  inline-size: max-content;
+}
+.plain-navigation-hidden-label {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+/* Root navigation owns its edge unless an explicit navigation region adopts it. */
+.plain-navigation-surface {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  position: relative;
+}
+.plain-navigation-surface:not([data-navigation-mode='horizontal']) {
+  inline-size: max-content;
+}
+.plain-navigation-surface[data-navigation-mode='horizontal'] {
+  inline-size: 100%;
+}
+.plain-navigation-surface[data-navigation-boundary='inline-end'] {
+  border-inline-end: 1px solid var(--plain-border);
+}
+.plain-navigation-surface[data-navigation-boundary='inline-start'] {
+  border-inline-start: 1px solid var(--plain-border);
+}
+.plain-navigation-surface[data-navigation-boundary='block-end'],
+.plain-navbar[data-navigation-boundary='block-end'] {
+  border-block-end: 1px solid var(--plain-border);
+}
+.plain-navigation-surface[data-navigation-boundary='block-start'],
+.plain-navbar[data-navigation-boundary='block-start'] {
+  border-block-start: 1px solid var(--plain-border);
+}
+.plain-navbar[data-navigation-boundary='none'] {
+  border-block: 0;
+}
+.plain-navbar-links > .plain-navigation-surface {
+  align-self: stretch;
+}
+.plain-navigation-hint {
+  position: fixed;
+  max-inline-size: min(12rem, calc(100vw - 1rem));
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--plain-border);
+  border-radius: 0.25rem;
+  background: var(--plain-surface);
+  color: var(--plain-text);
+  pointer-events: none;
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  .plain-navigation-surface * {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+.plain-entry-item[data-navigation-row] {
+  min-block-size: 2.5rem;
+  padding-inline: 0.75rem;
+}
+.plain-entry-item[data-navigation-row='rail'] {
+  inline-size: 2.5rem;
+  justify-content: center;
+}
+.plain-entry-item[data-navigation-row='rail']
+  > span:last-child:not(.plain-navigation-hidden-label):not(.plain-entry-icon) {
+  position: absolute;
+  inset-inline-end: 0.125rem;
+  font-size: 0.65em;
+}
+
+.plain-navigation-surface [data-rail-heading] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  min-block-size: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.plain-navbar-links > .plain-navigation-surface {
+  display: flex;
+  align-items: center;
+}
+
+.plain-navbar[data-navigation-boundary='block-start'] {
+  border-block-end: 0;
+}
+
+/* The complete region receives drops but never becomes a scrollport.
+   Host allocations must respect the backend minimum for its controls. */
+.plain-upload-region {
+  position: relative;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 14rem;
+  block-size: 10rem;
+  min-block-size: 10rem;
+  overflow: clip;
+  overflow-wrap: anywhere;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  border: 1px solid var(--plain-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.plain-upload-region[data-extent='compact'] {
+  block-size: 10rem;
+}
+.plain-upload-region[data-extent='large'] {
+  block-size: 16rem;
+}
+.plain-upload-region[data-extent='fill'] {
+  block-size: 100%;
+}
+.plain-upload-region > * {
+  flex-shrink: 0;
+  min-inline-size: 0;
+}
+.plain-upload-region > [data-upload-choose] {
+  align-self: flex-start;
+  max-inline-size: 100%;
+  white-space: normal;
+}
+.plain-upload-region[data-drop-ready] {
+  border-style: dashed;
+}
+.plain-upload-region[data-dragging] {
+  border-color: var(--plain-focus);
+  box-shadow: inset 0 0 0 2px var(--plain-focus);
+}
+.plain-upload-region:focus-visible,
+.plain-upload-region:focus-within {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: var(--plain-contained-focus-offset, 3px);
+}
+.plain-upload-region[aria-disabled='true'] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+.plain-upload-feedback,
+.plain-upload-name {
+  min-inline-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* A failed acquisition shows one error and recovery actions, not a second
+   filename row. The accepted preview keeps its own identity when present. */
+.plain-upload-region:is(
+    [data-upload-phase='ready'],
+    [data-upload-phase='delivery-failed']
+  )[data-upload-recovery]
+  > .plain-upload-name {
+  display: none;
+}
+.plain-upload-feedback:empty {
+  display: none;
+}
+.plain-upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.plain-upload-actions > * {
+  max-inline-size: 100%;
+  white-space: normal;
+  margin: 0;
+}
+.plain-upload-progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.plain-upload-progress > .upload-progress-name {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: start;
+}
+.plain-upload-progress > .upload-progress-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.plain-upload-progress .upload-progress-context {
+  flex: 1 1 8em;
+  min-inline-size: 0;
+}
+.plain-upload-progress[data-recovery],
+.plain-upload-progress[data-recovery] > .upload-progress-body {
+  row-gap: 0.25rem;
+}
+.plain-upload-progress progress {
+  inline-size: 100%;
+}
+.plain-upload-progress > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.plain-upload-remove-icon,
+.plain-upload-region .upload-remove-icon {
+  inline-size: 1em;
+  block-size: 1em;
+  margin-inline-end: 0;
+}
+
+.plain-upload-region .upload-required-description,
+.plain-upload-progress .upload-announcement {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Recovery uses a file/error summary and one row of available actions. */
+.plain-upload-region:is(
+    [data-upload-phase='ready'],
+    [data-upload-phase='delivery-failed']
+  )[data-upload-recovery] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: safe center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.plain-upload-region[data-upload-recovery] > .plain-upload-name,
+.plain-upload-region[data-upload-recovery] > .plain-upload-feedback {
+  flex-basis: 100%;
+}
+.plain-upload-region[data-upload-recovery] > [data-upload-choose],
+.plain-upload-region[data-upload-recovery] > .plain-upload-actions {
+  order: 1;
+  inline-size: auto;
+  flex: 0 1 auto;
+}
+
+/* File identity above one progress/action row; retained summary beside removal. */
+.plain-upload-region:is(
+  [data-upload-phase='validating'],
+  [data-upload-phase='uploading'],
+  [data-upload-phase='delivering']
+) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: safe center;
+  align-items: center;
+}
+.plain-upload-region > .plain-upload-name {
+  grid-column: 1 / -1;
+}
+.plain-upload-region > .plain-upload-progress {
+  grid-column: 1;
+}
+.plain-upload-region > .plain-upload-actions {
+  grid-column: 2;
+}
+/* Two independent placements in one grid area: centered content and end action.
+   Equal content gutters protect the action without moving the content's center. */
+.plain-upload-region[data-upload-phase='occupied'] {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  align-content: stretch;
+  align-items: center;
+}
+.plain-upload-region[data-upload-phase='occupied']
+  > :is(.plain-upload-preview, .plain-upload-name) {
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-inline: 3.5rem;
+  text-align: center;
+}
+.plain-upload-region[data-upload-phase='occupied'] > .plain-upload-actions {
+  grid-area: 1 / 1;
+  justify-self: end;
+}
+.plain-upload-region[data-upload-phase='occupied'] > .plain-upload-feedback {
+  grid-area: 2 / 1;
+}
+
+/* Fill may receive only the declared minimum, so use compact interior spacing. */
+.plain-upload-region:is([data-extent='compact'], [data-extent='fill']) {
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+/* Image-only presentation: the host supplies bounds; no frame, caption or clipping. */
+.plain-image-preview {
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  vertical-align: middle;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.plain-image-preview > * {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+.plain-image-preview img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: var(--ui-image-fit, contain);
+  object-position: center;
+  border: 0;
+  border-radius: 0;
+}
+.plain-image-preview-broken {
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+}
+.plain-image-preview-broken svg {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+.plain-upload-preview {
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  block-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+/* Read-only field frame; the preview renderer remains borderless. */
+.plain-preview-region {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.plain-preview-viewport {
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  box-sizing: border-box;
+  block-size: 10rem;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
+}
+.plain-preview-region[data-extent='compact'] > .plain-preview-viewport {
+  block-size: 6rem;
+}
+.plain-preview-region[data-extent='large'] > .plain-preview-viewport {
+  block-size: 16rem;
+}
+.plain-preview-viewport > * {
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+.plain-preview-region[aria-disabled='true'] {
+  opacity: 0.6;
+}
+
+/* Transfer recovery belongs to the reusable upload presentation. */
+.plain-upload-progress .upload-progress-actions {
+  align-self: start;
+  display: flex;
+  gap: 0.5rem;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+.plain-upload-progress .upload-transfer-issue {
+  display: block;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  color: var(--plain-danger);
+}
+/* A standalone transfer shows the complete error. The bounded acquisition
+   region keeps its concise summary without growing or becoming scrollable. */
+.plain-upload-region .plain-upload-progress .upload-transfer-issue {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plain-upload-region[data-upload-recovery] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+.plain-upload-region[data-upload-recovery] > [data-upload-choose] {
+  grid-column: 1;
+  order: 0;
+}
+.plain-upload-region[data-upload-recovery] > .plain-upload-progress {
+  grid-column: 2;
+}
+.plain-upload-region[data-upload-recovery] > .plain-upload-feedback {
+  grid-column: 1 / -1;
+}
+
+/* Coordinate the chooser with identity, leaving the complete lower row for
+   transfer feedback and recovery actions. This is private backend composition. */
+.plain-upload-region:has(> .plain-upload-progress[data-recovery]) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 0.25rem;
+}
+.plain-upload-region:has(> .plain-upload-progress[data-recovery])
+  > [data-upload-choose] {
+  grid-area: 1 / 1;
+  z-index: 1;
+}
+.plain-upload-region > .plain-upload-progress[data-recovery] {
+  grid-area: 1 / 1 / 3 / -1;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+.plain-upload-region
+  > .plain-upload-progress[data-recovery]
+  > .upload-progress-name {
+  grid-area: 1 / 2;
+}
+.plain-upload-region
+  > .plain-upload-progress[data-recovery]
+  > .upload-progress-body {
+  grid-area: 2 / 1 / 3 / -1;
+}
+.plain-upload-progress .upload-progress-actions > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.plain-upload-region[data-upload-recovery] > [data-upload-choose] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75em;
+  min-inline-size: 2.75em;
+  padding: 0.5em;
+}
+.plain-upload-recovery-icon {
+  inline-size: 1.25em;
+  block-size: 1.25em;
+}
+/* Control resets inherit typography except at explicit language boundaries. */
+:is(.plain-input, .plain-select, .plain-button, .plain-text-editor)[lang] {
+  font-family: var(--plain-font-family);
+}
+
+/* Collections own each overflow axis separately. Full height is allocated
+   by the parent; content height never creates a vertical scrollbar. */
+.plain-collection {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.plain-collection[data-full] {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.plain-collection[data-scroll='horizontal'],
+.plain-collection[data-scroll='both'] {
+  overflow-x: auto;
+}
+.plain-collection[data-scroll='horizontal'] {
+  overflow-y: hidden;
+}
+.plain-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.plain-list > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  min-width: 0;
+}
+.plain-list > li[data-selectable] {
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 0.5rem;
+}
+.plain-list-selection {
+  display: flex;
+  align-items: flex-start;
+  justify-self: start;
+}
+.plain-list-content {
+  min-width: 0;
+}
+.plain-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.plain-table th,
+.plain-table td {
+  position: relative;
+  padding: 0.5rem;
+  text-align: start;
+  border-bottom: 1px solid var(--plain-group-border);
+}
+.plain-collection-status {
+  position: relative;
+}
+.plain-collection-status[data-infinity-feedback] {
+  text-align: center;
+  color: var(--plain-muted);
+  font-size: 0.875em;
+}
+.plain-collection-status p {
+  margin-block: 0.5rem;
+}
+.plain-collection-announcement {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.plain-collection-sentinel {
+  height: 1px;
+}
+.plain-paginator {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plain-paginator label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plain-paginator input {
+  width: 5rem;
+}
+.plain-collection:focus-visible,
+.plain-list:focus-visible,
+.plain-table:focus-visible {
+  outline: 2px solid var(--plain-focus);
+  outline-offset: -2px;
+}
+
+/* Column allocation and resize affordances belong to the table backend. */
+.plain-collection[data-column-fit] {
+  min-width: 0;
+  max-width: 100%;
+}
+.plain-table th,
+.plain-table td {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.plain-column-resizer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 0.5rem;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+.plain-column-resizer::after {
+  content: '';
+  position: absolute;
+  inset-block: 20%;
+  inset-inline-end: 0;
+  border-inline-end: 1px solid currentColor;
+  opacity: 0.35;
+}
+.plain-column-resizer:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+/* Shared modal allocation retains native viewport clearance. */
+.plain-modal {
+  --uninterface-modal-edge-clearance: 1rem;
+}
+
+.plain-table-footer {
+  position: sticky;
+  inset-inline-start: 0;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.plain-paginator-jumper {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+}
+
+.plain-paginator-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plain-paginator-size > select {
+  /* Share the row with the label instead of requesting its entire width. */
+  width: auto;
+}
+
+.plain-paginator [aria-current='page'] {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.plain-paginator-jumper {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plain-paginator-jumper > [role='alert'] {
+  grid-column: 1 / -1;
+}
+
+.plain-collection[data-full] .plain-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.plain-collection[data-full] .plain-table thead th {
+  background: var(--plain-surface);
+}
+
+/* Collection frames own selection; no checkbox sits outside the card. */
+.plain-collection-cards {
+  --ui-collection-card-default-min: 20rem;
+  --ui-collection-card-default-max: 25rem;
+  --ui-collection-card-min: var(--ui-collection-card-default-min);
+  --ui-collection-card-max: var(--ui-collection-card-default-max);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.plain-collection-cards[data-grid] {
+  justify-content: start;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      min(100%, var(--ui-collection-card-min)),
+      min(100%, var(--ui-collection-card-max))
+    )
+  );
+}
+.plain-collection-cards > li {
+  min-width: 0;
+}
+.plain-card[data-collection-selected] {
+  outline: 2px solid var(--plain-primary);
+  outline-offset: -2px;
+}
+.plain-collection-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.plain-collection-card-selection,
+.plain-collection-card-leading {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+.plain-collection-card-title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.plain-collection-card-indicators,
+.plain-collection-card-overlay {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.plain-collection-card-indicators {
+  margin-inline-start: auto;
+}
+.plain-collection-card-media {
+  position: relative;
+  min-width: 0;
+}
+.plain-collection-card-overlay {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
+  max-width: calc(100% - 1rem);
+}
+.plain-collection-card-details {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+.plain-collection-card-details > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 0.5rem;
+}
+.plain-collection-card-details dt {
+  font-weight: 600;
+}
+.plain-collection-card-details dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.plain-collection-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Compact row actions retain each button's native padding and hit area. */
+.plain-collection-table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* The owner supplies the loading surface; only the overlay is clipped. */
+.plain-loading-region {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: inherit;
+  overflow-x: clip;
+  overflow-y: clip;
+  pointer-events: auto;
+}
+.plain-loading-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  vertical-align: middle;
+}
+.plain-loading-label-hidden {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.plain-loading-region {
+  background: color-mix(in srgb, var(--plain-surface, Canvas) 80%, transparent);
+}
+.plain-loading-spinner {
+  width: 1em;
+  height: 1em;
+  border: 0.15em solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: plain-loading-spin 0.8s linear infinite;
+}
+@keyframes plain-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plain-loading-spinner {
+    animation: none;
+  }
+}
+
+/* Live activity is outside busy/inert content and cannot enlarge a scrollport. */
+.plain-loading-announcement {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* An unbounded, initially empty collection still needs a visible loading surface. */
+.plain-collection[data-loading-empty]:not([data-full]) {
+  min-height: 4rem;
+}
+
+.plain-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.plain-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* The collection owns a supporting failure region outside the data scrollport. */
+.plain-collection-frame {
+  min-width: 0;
+  min-height: 0;
+}
+.plain-collection-frame[data-collection-full] {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.plain-collection-frame[data-collection-full] > .plain-collection {
+  flex: 1;
+  height: auto;
+}
+.plain-collection-failure {
+  min-width: 0;
+  flex: none;
+}
+.plain-collection-failure[data-collection-failure='replacement'] {
+  margin-block-end: 0.5rem;
+}
+.plain-collection-failure[data-collection-failure='append'] {
+  margin-block-start: 0.5rem;
+}
+
+.plain-notice {
+  --plain-notice-max-action-hang: 100vw;
+}
+
+/* Hang the leading text action padding into the notice inset. Move the row
+   together so native hit targets, focus paint, wrapping and peer gaps survive. */
+.plain-notice-actions:has(
+  > .plain-button-host:first-child > [data-ui-button-variant='text']
+) {
+  margin-inline-start: max(
+    calc(-1 * var(--plain-notice-action-inset, calc(0.85rem + 1px))),
+    calc(-1 * var(--plain-notice-max-action-hang, 100vw))
+  );
+}
+
+/* Without an icon column, keep the target and focus inside the frame. */
+.plain-notice:not(:has(> .plain-notice-icon)) {
+  --plain-notice-max-action-hang: calc(1rem - 3px);
+}
+
+/* Drawer and popover integration: native surfaces, bounded inner scrolling,
+   logical edges, and no allocation while hidden. No business CSS is required. */
+.plain-overlay {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: min(26rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: visible;
+  transform: none;
+}
+.plain-overlay:not([open]):not(:popover-open) {
+  display: none;
+}
+.plain-overlay[open],
+.plain-overlay:popover-open {
+  display: flex;
+  visibility: visible;
+  flex-direction: column;
+}
+/* Drawers meet the viewport; safe-area padding belongs inside the surface. */
+.plain-overlay[data-ui-overlay='drawer'] {
+  inset-block: 0;
+  height: 100dvh;
+  width: min(26rem, 100vw);
+  max-width: 100vw;
+  max-height: 100dvh;
+  max-block-size: 100dvh;
+  border-radius: 0;
+  --drawer-slide-x: 0%;
+  --drawer-slide-y: 0%;
+}
+.plain-overlay[data-ui-overlay='drawer'] > :first-child {
+  max-block-size: 100%;
+  border-radius: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='start'] {
+  inset-inline-start: 0;
+  --drawer-slide-x: -100%;
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='end'] {
+  inset-inline-end: 0;
+  --drawer-slide-x: 100%;
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='start']:dir(rtl) {
+  --drawer-slide-x: 100%;
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='end']:dir(rtl) {
+  --drawer-slide-x: -100%;
+}
+.plain-overlay[data-ui-overlay='drawer']:is(
+    [data-edge='top'],
+    [data-edge='bottom']
+  ) {
+  inset-inline: 0;
+  width: auto;
+  height: min(28rem, 100dvh);
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='top'] {
+  inset-block-end: auto;
+  --drawer-slide-y: -100%;
+}
+.plain-overlay[data-ui-overlay='drawer'][data-edge='bottom'] {
+  inset-block-start: auto;
+  --drawer-slide-y: 100%;
+}
+.plain-overlay.plain-drawer-enter-active,
+.plain-overlay.plain-drawer-leave-active {
+  transition: transform 200ms ease-out;
+}
+.plain-overlay.plain-drawer-enter-from,
+.plain-overlay.plain-drawer-leave-to {
+  transform: translate(var(--drawer-slide-x), var(--drawer-slide-y));
+}
+@media (prefers-reduced-motion: reduce) {
+  .plain-overlay.plain-drawer-enter-active,
+  .plain-overlay.plain-drawer-leave-active {
+    transition: none;
+  }
+}
+.plain-overlay[data-ui-overlay='popover'] {
+  width: min(24rem, calc(100vw - 1rem));
+  inset: auto;
+  margin: 0;
+}
+/* Header filters fit their business editor; positioning bounds the viewport. */
+.plain-overlay[data-ui-overlay='popover'][data-ui-column-filter-popover] {
+  width: max-content;
+}
+.plain-overlay > :first-child {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  max-height: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.plain-overlay-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.plain-overlay-heading > :last-child:not(h2) {
+  margin-inline-start: auto;
+}
+.plain-overlay-heading > h2 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 600;
+}
+.plain-overlay > :first-child > header,
+.plain-overlay > :first-child > footer {
+  flex: none;
+}
+.plain-overlay > :first-child > [role='region'] {
+  min-height: 0;
+  overflow: auto;
+  flex: 1;
+}
+.plain-overlay > :first-child > [role='region']:focus-visible {
+  outline-offset: -2px;
+}
+
+.plain-overlay:not([aria-modal='true'])::backdrop {
+  background: transparent;
+  backdrop-filter: none;
+  pointer-events: none;
+}
+
+/* Field peers anchor at their first row; editor/feedback growth goes down.
+   Bare actions retain the navbar's centered treatment. */
+.plain-navbar-actions > .plain-field {
+  align-self: flex-start;
+}
+
+/* Only this backend's own text/select surfaces use the text-row offset.
+   Checkbox, switch and opaque custom editor labels retain their own treatment. */
+@media (min-width: 40rem) {
+  .plain-labels-beside:has(
+      > .plain-field-editor > .plain-text-surface,
+      > .plain-field-editor > div > .plain-select
+    )
+    > .plain-label {
+    padding-block-start: calc(0.5rem + 1px);
+  }
+  .plain-labels-beside.plain-field-size-small:has(
+      > .plain-field-editor > .plain-text-surface,
+      > .plain-field-editor > div > .plain-select
+    )
+    > .plain-label {
+    padding-block-start: calc(0.25rem + 1px);
+  }
+  .plain-labels-beside.plain-field-size-large:has(
+      > .plain-field-editor > .plain-text-surface,
+      > .plain-field-editor > div > .plain-select
+    )
+    > .plain-label {
+    padding-block-start: calc(0.75rem + 1px);
+  }
+}
+
+/* Managed feedback viewport: theme spacing, bounded scrolling and independent items. */
+
+.plain-feedback-enter-active,
+.plain-feedback-leave-active {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+.plain-feedback-enter-from,
+.plain-feedback-leave-to {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+@media (prefers-reduced-motion: reduce) {
+  .plain-feedback-enter-active,
+  .plain-feedback-leave-active {
+    transition: none;
+  }
+}
+.plain-feedback-viewport {
+  position: fixed;
+  inset-inline-end: 0;
+  top: 0;
+  inline-size: min(26rem, 100vw);
+  box-sizing: border-box;
+  padding: 1rem;
+  max-block-size: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  pointer-events: none;
+}
+.plain-feedback-viewport:empty {
+  display: none;
+}
+.plain-feedback-viewport[data-placement^='bottom'] {
+  top: auto;
+  bottom: 0;
+}
+.plain-feedback-viewport[data-placement$='start'] {
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+}
+.plain-feedback-viewport[data-placement$='center'] {
+  inset-inline-start: 50%;
+  inset-inline-end: auto;
+  transform: translateX(-50%);
+}
+.plain-feedback-viewport > * {
+  flex: none;
+  pointer-events: auto;
+  max-inline-size: 100%;
+}
+.plain-feedback-item {
+  position: relative;
+  overflow-wrap: anywhere;
+}
+/* Direct content-region focus represents the delivery; child controls own their cues.
+   Paint outside the surface without replacing its native shadow/elevation. */
+.plain-feedback-item:focus-visible,
+.plain-feedback-item:has(> .plain-feedback-content:focus-visible) {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: 3px;
+}
+/* The content region's indicator is painted on the enclosing surface above. */
+.plain-feedback-content:focus-visible {
+  outline: none;
+}
+.plain-feedback-viewport:focus-visible {
+  outline: 3px solid var(--plain-focus);
+  outline-offset: -3px;
+}
+@media (forced-colors: active) {
+  .plain-feedback-item:focus-visible,
+  .plain-feedback-item:has(> .plain-feedback-content:focus-visible),
+  .plain-feedback-viewport:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+.plain-feedback-announcement {
+  position: absolute;
+  inset: 0 auto auto 0;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.plain-feedback-item[data-feedback-surface='toast'] {
+  padding-block: 0.5rem;
+  align-items: center;
+}
+.plain-toast-title {
+  margin-inline-end: 0.5em;
+}
+
+/* Side-region navbars stack by orientation, independently of available width. */
+.plain-navbar[data-navbar-orientation='vertical'] {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  border-block: 0;
+}
+.plain-navbar[data-navbar-orientation='vertical'] > .plain-navbar-links {
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.plain-navbar[data-navbar-orientation='vertical'] > .plain-navbar-actions {
+  margin-inline-start: 0;
+}
+.plain-navbar[data-navbar-orientation='vertical'][data-navigation-boundary='inline-start'] {
+  border-inline-start: 1px solid var(--plain-border);
+}
+.plain-navbar[data-navbar-orientation='vertical'][data-navigation-boundary='inline-end'] {
+  border-inline-end: 1px solid var(--plain-border);
+}
+
+/* Sorting is a header interaction; inherit the surrounding header typography. */
+.plain-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  max-width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+.plain-table-sort:disabled {
+  cursor: default;
+}
+.plain-table-sort-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+.plain-table-sort:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Compact column filter affordance; popup content has its own layout. */
+.plain-table-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+  margin-inline-start: 0.25em;
+  padding: 0.125em;
+  border: 0;
+  border-radius: 0.25em;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.plain-table-filter:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.plain-table-filter[data-filter-active] {
+  color: var(--plain-primary);
+}
+.plain-table-filter:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+.plain-table-filter .table-filter-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+.plain-table-header {
+  align-items: center;
+  max-width: 100%;
+}
+.plain-table-header > .plain-table-sort {
+  min-width: 0;
+}
+
+/* Admitted ordinary editors divide the shared surface without owning its edge. */
+[data-ui-frame-editor] {
+  flex: 1 1 5ch;
+  min-inline-size: var(
+    --ui-text-min-width,
+    min(3ch, var(--ui-text-max-width, 3ch))
+  );
+  inline-size: 5ch;
+  max-inline-size: min(100%, var(--ui-text-max-width, 100%));
+}
+
+/* Auto margin receives space only after growing editors reach their caps. */
+.plain-input-frame-spacer {
+  display: block;
+  flex: 0 0 0;
+  inline-size: 0;
+  min-inline-size: 0;
+  margin-inline-start: auto;
+  pointer-events: none;
+}
+
+/* Export the first editable row, not a leading decoration, as the frame baseline.
+   Native minimum-height space stays around the line; icons/actions stay centered. */
+.plain-input-frame {
+  align-content: center;
+}
+.plain-text-surface[data-ui-frame-editor] {
+  align-self: baseline;
+}
+
+.plain-text-surface > .plain-text-editor {
+  align-self: baseline;
+}
+.plain-text-surface {
+  align-content: center;
+}
+/* Only the visible caption participates; indicators keep native centered placement. */
+.plain-button {
+  flex-wrap: wrap;
+  align-content: center;
+}
+.plain-button-label:not(.plain-button-label-hidden) {
+  align-self: baseline;
+}
+
+/* Row allocation and row alignment are independent. Slot wrappers stay keyed. */
+.plain-collection-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 0.5rem;
+  row-gap: 0;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  flex: 0 0 auto;
+}
+.plain-collection-footer > [data-footer-part] {
+  flex: 0 1 auto;
+  inline-size: max-content;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.plain-collection-footer
+  > [data-footer-part]:not([data-footer-row='0']):not([data-footer-row='-1']) {
+  margin-block-start: 0.5rem;
+}
+.plain-collection-footer > .plain-collection-footer-break {
+  flex: 0 0 100%;
+  block-size: 0;
+  min-block-size: 0;
+}
+.plain-collection-footer > .plain-collection-footer-info {
+  color: var(--plain-muted);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+  flex-grow: 1;
+}
+.plain-collection-footer > [data-navigation-start] {
+  margin-inline-start: auto;
+}
+.plain-collection-footer-paginator {
+  display: flex;
+  justify-content: flex-end;
+}
+.plain-collection-footer[data-compact] > .plain-collection-footer-paginator {
+  justify-content: center;
+}
+.plain-paginator[data-compact] {
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+}
+.plain-paginator-direction {
+  display: inline-block;
+}
+.plain-paginator-direction:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+/* Five visible digit cells; native padding/borders are additional, never maxlength. */
+.plain-paginator-jumper input {
+  box-sizing: border-box;
+  inline-size: calc(5ch + 1rem + 2px);
+  min-inline-size: calc(5ch + 1rem + 2px);
+  flex: 0 0 auto;
+}
+.plain-field-tooltip-anchor {
+  position: relative;
+  min-inline-size: 0;
+}
+.plain-tooltip-description {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.plain-field-failure-tooltip {
+  position: fixed;
+  inline-size: max-content;
+  max-inline-size: min(24rem, calc(100vw - 1rem));
+  overflow-wrap: anywhere;
+}
+
+/* Collection intent groups use native controls; no competing table/query engine. */
+.plain-collection-header {
+  --collection-header-gap: 0.75rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  inline-size: 100%;
+  flex: 0 0 auto;
+}
+.plain-collection-header-primary,
+.plain-collection-header-part {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--collection-header-gap, 0.75rem);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.plain-collection-header-primary {
+  inline-size: 100%;
+}
+.plain-collection-header-part {
+  flex: 0 1 auto;
+}
+.plain-collection-header-part > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.plain-collection-header-part[data-separate] {
+  margin-inline-start: auto;
+}
+.plain-collection-header-part[data-new-row] {
+  flex-basis: 100%;
+  inline-size: 100%;
+}
+.plain-collection-header-part[data-grow] {
+  flex: 1 1 0;
+}
+.plain-collection-header-part[data-grow] > * {
+  inline-size: 100%;
+}
+.plain-collection-header-part[data-stacked] {
+  flex-direction: column;
+  align-items: stretch;
+}
+.plain-collection-header-part[data-contents] {
+  display: contents;
+}
+.plain-collection-header-primary[data-align-editors],
+.plain-collection-header-primary[data-align-editors]
+  .plain-collection-header-part {
+  align-items: flex-start;
+}
+.plain-collection-header [data-ui-header-aligned] {
+  padding-block-start: var(--ui-header-editor-offset, 0px);
+}
+
+/* Sort rules and Add sort share native-sized tracks without hidden controls. */
+.plain-collection-sort-layout {
+  min-inline-size: 0;
+}
+.plain-collection-sort-layout[data-sort-part='panel'] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 0.5rem;
+  align-items: center;
+  inline-size: 100%;
+}
+.plain-collection-sort-layout[data-sort-part='panel'][data-sort-multiple] {
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+}
+.plain-collection-sort-layout[data-sort-part='row'] {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+}
+.plain-collection-sort-layout[data-sort-part='movement'] {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.plain-collection-sort-layout[data-sort-part='remove'] {
+  display: flex;
+  align-items: center;
+}
+.plain-collection-sort-layout[data-sort-part='add'] {
+  grid-column: 1;
+  justify-self: start;
+}
+.plain-collection-sort-layout[data-sort-part='panel'][data-sort-multiple]
+  > .plain-collection-sort-layout[data-sort-part='add'] {
+  grid-column: 2;
+}
+
+/* Private collection criterion badges: passive summary and native removal. */
+.plain-query-badge {
+  max-inline-size: 100%;
+  height: auto;
+  min-block-size: 0;
+}
+.plain-query-badge-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-inline-size: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.plain-query-badge-content [data-icon] {
+  flex-shrink: 0;
+}
+.plain-query-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border: 1px solid var(--plain-border);
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--plain-surface);
+}
+.plain-query-badge > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0.25em;
+  font: inherit;
+  cursor: pointer;
+}
+.plain-query-badge > button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Source-query precedence participates in intrinsic header measurement. */
+.plain-table-sort-priority {
+  flex-shrink: 0;
+  font-size: 0.75em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Button width is independent of its containing layout allocation. */
+.plain-button-host[data-ui-button-width='full'] {
+  inline-size: 100%;
+}
+.plain-button-host[data-ui-button-width='content'] {
+  inline-size: fit-content;
+}
+
+/* Neutral buttons reveal their semantic role through interaction, not idle fill. */
+.plain-button.plain-variant-neutral {
+  color: var(--plain-text);
+  border-color: var(--plain-border);
+  background: var(--plain-surface);
+}
+.plain-button.plain-variant-neutral:is(:hover, :focus-visible, :active):not(
+    :disabled
+  ) {
+  color: var(--plain-color);
+  border-color: var(--plain-color);
+  background: color-mix(in srgb, var(--plain-color) 10%, var(--plain-surface));
+}
+
+/* A real flex line boundary lets actions join sorting without CSS reordering. */
+.plain-collection-header-part[data-line-break] {
+  flex: 0 0 100%;
+  block-size: 0;
+  min-block-size: 0;
+  margin-block: calc(var(--collection-header-gap) / -2);
+  padding: 0;
+}
+.plain-collection-header-part[data-header-part='actions'] {
+  align-self: flex-start;
+}
+
+/* Sort badge gestures keep native badge dimensions and independent removal. */
+.plain-query-badge {
+  position: relative;
+}
+.plain-query-badge-content[data-ui-sort-reorder] {
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+.plain-query-badge-content[data-ui-sort-reorder]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.plain-query-badge[data-ui-sort-dragging] {
+  opacity: 0.6;
+}
+.plain-query-badge[data-ui-sort-dragging] [data-ui-sort-reorder] {
+  cursor: grabbing;
+}
+.plain-query-badge[data-ui-sort-drop]::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inline-size: 2px;
+  background: currentColor;
+  pointer-events: none;
+}
+.plain-query-badge[data-ui-sort-drop='before']::after {
+  inset-inline-start: -3px;
+}
+.plain-query-badge[data-ui-sort-drop='after']::after {
+  inset-inline-end: -3px;
+}
+.plain-query-badge-announcement {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Reorder focus represents the complete criterion; removal keeps its own focus. */
+@supports selector(:has(*)) {
+  .plain-query-badge:has(
+    .plain-query-badge-content[data-ui-sort-reorder]:focus-visible
+  ) {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+  .plain-query-badge
+    .plain-query-badge-content[data-ui-sort-reorder]:focus-visible {
+    outline: none;
+  }
+}
+
+/* Floating launcher and drawer allocation integration. */
+.plain-floating {
+  --ui-floating-clearance: 12;
+  width: max-content;
+  max-width: calc(100dvw - 24px);
+  max-height: calc(100dvh - 24px);
+}
+/* A standalone icon action must remain visible over arbitrary page content.
+   Keep native button interaction/focus; the immediate host supplies its surface. */
+.plain-floating > .plain-button-host:has(> [data-ui-button-variant='icon']) {
+  background: var(--plain-surface);
+  border: 1px solid var(--plain-border);
+  border-radius: 0.375rem;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--plain-text) 18%, transparent);
+}
+.plain-floating > .plain-button-host > [data-ui-button-variant='icon'] {
+  min-inline-size: 3rem;
+  min-block-size: 3rem;
+  font-size: 1.5rem;
+  border-radius: inherit;
+}
+.plain-floating[data-draggable] {
+  touch-action: none;
+}
+.plain-floating-move {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 100%;
+  max-width: calc(100dvw - 24px);
+  padding: 0.5rem;
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid currentColor;
+}
+.plain-floating-move label {
+  display: flex;
+  flex-direction: column;
+}
+.plain-floating-move input {
+  touch-action: auto;
+}
+.plain-overlay[data-ui-overlay='drawer'][data-docked] {
+  position: relative !important;
+  inset: auto !important;
+  margin: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  height: 100%;
+  display: flex;
+  visibility: visible;
+  flex-direction: column;
+}
+[data-ui-overlay='drawer'][data-docked][hidden] {
+  display: none !important;
+}
+.plain-drawer-resize {
+  position: absolute;
+  touch-action: none;
+  background: transparent;
+  outline-offset: -2px;
+}
+[data-edge='end'] > .plain-drawer-resize {
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: 8px;
+  cursor: ew-resize;
+}
+[data-edge='start'] > .plain-drawer-resize {
+  inset-inline-end: 0;
+  inset-block: 0;
+  width: 8px;
+  cursor: ew-resize;
+}
+[data-edge='top'] > .plain-drawer-resize {
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: 8px;
+  cursor: ns-resize;
+}
+[data-edge='bottom'] > .plain-drawer-resize {
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 8px;
+  cursor: ns-resize;
+}
+.plain-drawer-resize:focus-visible {
+  outline: 2px solid currentColor;
+}
+
+/* A retained overlay can stay below an already-live native child popup. */
+.plain-overlay[data-ui-overlay='drawer'][data-css-panel] {
+  display: flex;
+  visibility: visible;
+  flex-direction: column;
+}
+[data-ui-overlay='drawer'][data-css-panel][hidden] {
+  display: none !important;
+}
+
+/* Checkable arrangements retain native label activation and logical direction. */
+.plain-checkable-field[data-ui-checkable='control-aligned']
+  > :is(.plain-help, .plain-field-feedback) {
+  grid-column: 1 / -1;
+}
+.plain-checkable-field[data-ui-checkable='separated'] {
+  grid-template-columns: minmax(7rem, 1fr) minmax(0, 3fr);
+  column-gap: 1rem;
+}
+.plain-checkable-field[data-ui-checkable='separated'] > .plain-label {
+  grid-column: 1;
+  text-align: start;
+}
+.plain-checkable-field[data-ui-checkable='separated'][data-ui-label-align='far']
+  > .plain-label {
+  text-align: start;
+}
+.plain-checkable-field[data-ui-checkable='separated'] > .plain-field-editor {
+  grid-column: 2;
+}
+@media (min-width: 40rem) {
+  .plain-checkable-field[data-ui-checkable='control-aligned'] {
+    padding-inline-start: calc((100% - 1rem) / 4 + 1rem);
+  }
+  .plain-field[data-ui-checkable-group][data-ui-checkable='control-aligned'],
+  .plain-field[data-ui-checkable-group][data-ui-checkable='separated'] {
+    display: block;
+  }
+  .plain-field[data-ui-checkable-group]:is(
+      [data-ui-checkable='control-aligned'],
+      [data-ui-checkable='separated']
+    )
+    > legend {
+    float: inline-start;
+    inline-size: calc((100% - 1rem) / 4);
+    text-align: start;
+  }
+  .plain-field[data-ui-checkable-group][data-ui-label-align='far'] > legend {
+    text-align: start;
+  }
+  .plain-field[data-ui-checkable-group]:is(
+      [data-ui-checkable='control-aligned'],
+      [data-ui-checkable='separated']
+    )
+    > :not(legend) {
+    margin-inline-start: calc((100% - 1rem) / 4 + 1rem);
+  }
+}
+@media (max-width: 39.999rem) {
+  .plain-checkable-field[data-ui-checkable='separated'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .plain-checkable-field[data-ui-checkable='separated'] > .plain-label {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: start;
+  }
+  .plain-checkable-field[data-ui-checkable='separated'] > .plain-field-editor {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .plain-checkable-field[data-ui-checkable='separated']
+    > :is(.plain-help, .plain-field-feedback) {
+    grid-column: 1;
+  }
+}
+
+[data-ui-drawer-layout][data-ui-drawer-motion] {
+  transition:
+    grid-template-columns 200ms ease-out,
+    grid-template-rows 200ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-ui-drawer-layout][data-ui-drawer-motion] {
+    transition: none;
+  }
+}
+.plain-checkable-field[data-ui-checkable='separated'][data-ui-label-align='near']
+  > .plain-label {
+  text-align: end;
+}
+@media (min-width: 40rem) {
+  .plain-field[data-ui-checkable-group][data-ui-label-align='near'] > legend {
+    text-align: end;
+  }
+}
+
+/* Drawer presentation owns the shared-edge line and depth. The docking
+   frame separates this paint from clipped motion; layouts only allocate. */
+.plain-drawer-dock {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+.plain-drawer-dock-motion {
+  overflow: clip;
+  height: 100%;
+  min-height: 0;
+}
+/* Keep the full-size moving surface anchored at its attached outer edge.
+   Its main-facing edge then follows the animated allocation, including when
+   the track is narrower/shorter than the retained surface. */
+.plain-drawer-dock-motion {
+  display: flex;
+  flex-direction: column;
+}
+.plain-drawer-dock-motion > [data-ui-overlay='drawer'][data-docked] {
+  flex-shrink: 0;
+}
+.plain-drawer-dock[data-edge='start'] > .plain-drawer-dock-motion {
+  align-items: start;
+}
+.plain-drawer-dock[data-edge='end'] > .plain-drawer-dock-motion {
+  align-items: end;
+}
+.plain-drawer-dock[data-edge='bottom'] > .plain-drawer-dock-motion {
+  justify-content: end;
+}
+.plain-drawer-depth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  container-type: size;
+}
+.plain-drawer-dock > .plain-drawer-depth {
+  display: none;
+}
+.plain-drawer-dock:has([data-ui-overlay='drawer'][data-docked]:not([hidden]))
+  > .plain-drawer-depth {
+  display: block;
+}
+.plain-drawer-depth-shadow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100cqw;
+  height: 100cqh;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: 1px solid var(--plain-text);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--plain-text) 18%, transparent);
+}
+/* Orient the native downward shadow toward main, retaining its theme recipe. */
+.plain-drawer-depth[data-edge='top'] {
+  clip-path: inset(calc(100% - 1px) 0 -100vmax 0);
+}
+.plain-drawer-depth[data-edge='bottom'] {
+  clip-path: inset(-100vmax 0 calc(100% - 1px) 0);
+}
+.plain-drawer-depth[data-edge='bottom'] > span {
+  transform: translate(-50%, -50%) scaleY(-1);
+}
+.plain-drawer-depth:is([data-edge='start'], [data-edge='end']) > span {
+  width: 100cqh;
+  height: 100cqw;
+}
+.plain-drawer-depth[data-edge='start'],
+.plain-drawer-depth[data-edge='end']:dir(rtl) {
+  clip-path: inset(0 -100vmax 0 calc(100% - 1px));
+}
+.plain-drawer-depth[data-edge='start'] > span,
+.plain-drawer-depth[data-edge='end']:dir(rtl) > span {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+.plain-drawer-depth[data-edge='end'],
+.plain-drawer-depth[data-edge='start']:dir(rtl) {
+  clip-path: inset(0 calc(100% - 1px) 0 -100vmax);
+}
+.plain-drawer-depth[data-edge='end'] > span,
+.plain-drawer-depth[data-edge='start']:dir(rtl) > span {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+@media (forced-colors: active) {
+  .plain-drawer-depth-shadow {
+    border-color: CanvasText;
+  }
+}
+
+/* Edge reconfiguration replaces track topology; it is not a slide between edges. */
+[data-ui-drawer-layout][data-ui-drawer-reconfigure],
+[data-ui-drawer-reconfigure]
+  > .plain-drawer-dock
+  > .plain-drawer-dock-motion
+  > .plain-overlay[data-docked] {
+  transition: none !important;
+}
+[data-ui-drawer-reconfigure]
+  > .plain-drawer-dock
+  > .plain-drawer-dock-motion
+  > .plain-overlay[data-docked] {
+  transform: none !important;
+}
+
+.plain-collection-data-summary {
+  flex: none;
+  min-inline-size: 0;
+  padding-block-start: var(--plain-space, 0.75rem);
+  overflow-wrap: anywhere;
+}
+.plain-collection-summary-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 0;
+}
+.plain-collection-summary-content > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.75rem;
+  min-inline-size: 0;
+}
+.plain-collection-summary-content dt {
+  font-size: 0.875em;
+  font-weight: 400;
+  color: var(--plain-muted);
+}
+.plain-collection-summary-content dd {
+  min-inline-size: 0;
+  margin: 0;
+  text-align: end;
+  font-size: 1.125em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The bounded row viewport retains its table summary at the visible bottom. */
+.plain-collection[data-full]
+  .plain-table:has(> tfoot[data-collection-summary]) {
+  /* Keep the summary's edge paint attached to its sticky cells. */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.plain-collection[data-full] .plain-table tfoot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+.plain-table tfoot td {
+  background: var(--plain-surface);
+}
+
+.plain-table [data-collection-summary-label] {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* A full-height form passes its bounded offer to one authored layout. */
+.plain-form[data-form-full] {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-block-size: 0;
+  block-size: 100%;
+  flex: 1 1 auto;
+}
+
+/* Delegate row scrolling while retaining the modal body's overflow fallback. */
+.plain-modal-body[data-content-scroll] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Supporting actions remain outside the table's row scrollport. */
+.plain-collection-frame[data-collection-full] > .plain-table-footer {
+  flex: none;
+}
+
+/* In a short modal there is no usable row viewport after the form and modal
+   chrome. Let the named body scroll rather than overlap controls with sticky
+   table regions. Ordinary bounded forms retain their full-height allocation. */
+@media (max-height: 32rem) {
+  .plain-modal-body[data-content-scroll] > .plain-form[data-form-full] {
+    block-size: auto;
+    flex: none;
+  }
+}
+
+/* Creation is a decorative row, not a mounted record/editor or loading state. */
+.plain-table-add-track {
+  background: var(--plain-surface);
+  color: var(--plain-text);
+}
+.plain-table .plain-table-add-track > td {
+  padding: 0;
+  background: var(--plain-surface);
+}
+.plain-table-add-preview {
+  display: grid;
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+  box-sizing: border-box;
+}
+.plain-table-add-cell {
+  grid-row: 1;
+  min-inline-size: 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.plain-table-add-cell > span {
+  display: block;
+  block-size: 2rem;
+  background: color-mix(in srgb, var(--plain-text) 7%, var(--plain-surface));
+}
+.plain-table-add-action {
+  position: sticky;
+  inset-inline-start: 0;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-inline-size: 100%;
+  padding-block: 0.5rem;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.plain-table-add-action > * {
+  pointer-events: auto;
+}
+
+/* Yield header pinning before sticky regions can obstruct row controls. */
+.plain-collection[data-full][data-add-row-compact] .plain-table thead {
+  position: static;
+}
+
+/* Reference progress presentation; operation and announcements stay outside. */
+.plain-progress-bar {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+  block-size: 0.75rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: var(--plain-surface);
+  outline: 1px solid var(--plain-border);
+}
+.plain-progress-bar > span {
+  display: block;
+  block-size: 100%;
+  background: var(--plain-progress-color);
+}
+.plain-progress-bar[data-state='indeterminate'] > span {
+  position: relative;
+  inline-size: 35%;
+  animation: plain-progress-travel 1.6s ease-in-out infinite alternate;
+}
+@keyframes plain-progress-travel {
+  from {
+    inset-inline-start: 0%;
+  }
+  to {
+    inset-inline-start: 65%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plain-progress-bar[data-state='indeterminate'] > span {
+    animation: none;
+    inset-inline-start: 32.5%;
+  }
+}
+@media (forced-colors: active) {
+  .plain-progress-bar {
+    background: Canvas;
+    outline: 1px solid CanvasText;
+  }
+  .plain-progress-bar > span {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}

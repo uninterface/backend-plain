@@ -1,0 +1,113 @@
+{
+  "name": "@uninterface/backend-plain",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uninterface/backend-plain.git"
+  },
+  "type": "module",
+  "files": [
+    "capabilities.json",
+    "docs/",
+    "src/",
+    "testing/"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./style.css": "./src/style.css",
+    "./capabilities.json": "./capabilities.json",
+    "./*.vue": "./src/*.vue",
+    "./integration": "./src/integration.ts",
+    "./layout": "./src/layout.ts",
+    "./testing": "./testing/index.ts",
+    "./testing/dom": "./testing/dom.mjs",
+    "./focus": "./src/focus.ts",
+    "./font.css": "./src/font.css",
+    "./font-bundled.css": "./src/font-bundled.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "dependencies": {
+    "@uninterface/uninterface": "0.0.1",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/noto-sans-sc": "5.3.1",
+    "@fontsource-variable/noto-sans-tc": "5.3.1"
+  },
+  "description": "Minimal accessible reference presentation for Uninterface.",
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.1",
+    "@uninterface/testing": "0.0.1",
+    "@uninterface/fonts": "0.0.1",
+    "@vitejs/plugin-vue": "6.0.10",
+    "jsdom": "27.4.0",
+    "vite": "7.3.7",
+    "vue": "3.5.43"
+  },
+  "uninterface": {
+    "testing": {
+      "typography": "testing/typography.json",
+      "componentConformance": {
+        "collectionFooterSharesAt435": true,
+        "retainsEditorsOnColumnReorder": true,
+        "checkableModes": [
+          "flushed",
+          "control-aligned",
+          "separated"
+        ],
+        "fieldLabels": {
+          "placements": [
+            "beside-near",
+            "beside-far"
+          ],
+          "resolves": {
+            "beside": "beside-far",
+            "floating": "show"
+          }
+        },
+        "fieldSizing": {
+          "small": {
+            "fontSize": "smaller"
+          },
+          "extraLarge": {
+            "fontSize": "larger"
+          }
+        },
+        "fieldHelp": "together",
+        "loadingIndicator": {
+          "selector": ".plain-button-indicator",
+          "motion": "static"
+        },
+        "navigation": "disclosure",
+        "segmentedLabelBeside": true
+      },
+      "dom": [
+        "testing/native-component-integration.test.mjs",
+        "testing/strategy-native-presentation.test.mjs",
+        "testing/collapsible-presentation.test.mjs",
+        "testing/temporal.test.mjs",
+        "testing/field-feedback.test.mjs",
+        "testing/feedback-presentation.test.mjs",
+        "testing/neutral-button.test.mjs"
+      ],
+      "reference": {
+        "page": "testing/native-reference.html",
+        "browser": "testing/native-reference.spec.ts"
+      },
+      "browser": [
+        "testing/native-paint.spec.ts",
+        "testing/presentation.spec.ts",
+        "testing/component-conformance.spec.ts",
+        "testing/stacking-popups.spec.ts",
+        "testing/temporal.spec.ts"
+      ],
+      "paginatorGeometry": {
+        "sizeSurface": ".plain-paginator-size select",
+        "jumperSurface": ".plain-paginator-jumper input",
+        "jumperRoot": ".plain-paginator-jumper"
+      }
+    }
+  }
+}

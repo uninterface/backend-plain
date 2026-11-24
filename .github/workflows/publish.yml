@@ -1,0 +1,78 @@
+name: Publish Plain to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Stage the verified package on npm for maintainer approval
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - name: Pack and inspect Plain
+        env:
+          PACK_DIR: ${{ runner.temp }}/plain-pack
+        run: |
+          mkdir -p "$PACK_DIR"
+          npm pack --offline --ignore-scripts --json --pack-destination "$PACK_DIR" > "$PACK_DIR/pack.json"
+          node scripts/check-package.mjs "$PACK_DIR/pack.json"
+          mv "$PACK_DIR"/uninterface-backend-plain-*.tgz "$PACK_DIR/backend-plain.tgz"
+      - name: Install, type-check and build a fresh consumer
+        env:
+          PACK_DIR: ${{ runner.temp }}/plain-pack
+          CONSUMER_DIR: ${{ runner.temp }}/plain-consumer
+        run: |
+          core_version=$(node -p 'require("./package.json").dependencies["@uninterface/uninterface"]')
+          mkdir -p "$CONSUMER_DIR"
+          cp -R tests/package-consumer/. "$CONSUMER_DIR/"
+          cp "$PACK_DIR/backend-plain.tgz" "$CONSUMER_DIR/"
+          cd "$CONSUMER_DIR"
+          npm pkg set "dependencies.@uninterface/uninterface=$core_version"
+          npm install --ignore-scripts --no-audit --no-fund --registry https://registry.npmjs.org/
+          npm run check
+      - name: Rehearse publication and record integrity
+        working-directory: ${{ runner.temp }}/plain-pack
+        run: |
+          npm publish ./backend-plain.tgz --dry-run --offline --ignore-scripts --access public --tag alpha
+          sha512sum backend-plain.tgz > SHA512SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uninterface-backend-plain-npm-package
+          path: ${{ runner.temp }}/plain-pack/
+          if-no-files-found: error
+
+  stage:
+    if: ${{ inputs.stage }}
+    needs: package
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          name: uninterface-backend-plain-npm-package
+          path: ${{ runner.temp }}/plain-pack
+      - name: Verify the release tarball
+        working-directory: ${{ runner.temp }}/plain-pack
+        run: sha512sum --check SHA512SUMS
+      - name: Install npm with staged publishing support
+        run: npm install --global npm@11.19.1 --ignore-scripts --no-audit --no-fund --registry https://registry.npmjs.org/
+      - name: Stage the verified tarball on npm
+        working-directory: ${{ runner.temp }}/plain-pack
+        run: npm stage publish ./backend-plain.tgz --access public --tag alpha --registry https://registry.npmjs.org/
