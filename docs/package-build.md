@@ -16,4 +16,4 @@ The [publish workflow](../.github/workflows/publish.yml) checks the packed expor
 
 Commit the intended version in `package.json` and `package-lock.json`. Tag that commit as `v<version>` and push the tag. For example, `v0.0.2` requires `package.json` version `0.0.2`.
 
-The publish workflow verifies the tag against the committed version, runs the package and consumer checks, and publishes the verified tarball to the npm `alpha` dist-tag. The npm trusted publisher for `publish.yml` and the GitHub `npm` environment must allow `npm publish`. A manual run can build an artifact or stage it for npm approval.
+The publish workflow verifies the tag against the committed version and runs the package and consumer checks. A version such as `9.9.9` publishes under npm's `latest` dist-tag. A version with a SemVer prerelease suffix, such as `9.9.9-rc.1`, publishes under `pre-release`. Manual staging uses the same rule. The npm trusted publisher for `publish.yml` and the GitHub `npm` environment must allow `npm publish` for tag releases.
