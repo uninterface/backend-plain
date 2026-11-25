@@ -78,7 +78,7 @@ test('Plain controls own their styling without a provider or application ancesto
 test('native button variants and indicators follow the declared treatments', () =>
   withBuiltDomFixture(
     build,
-    new URL('../../../tests/fixtures/buttons.ts', import.meta.url),
+    new URL('./fixtures/buttons.ts', import.meta.url),
     async ({ mountButton }) => {
       const treatment = (value) => `plain-variant-${value}`
       const strategies = await mountButton({}, { strategy: 'text', icon: true })
@@ -140,7 +140,7 @@ test('native button variants and indicators follow the declared treatments', () 
 test('layout density uses the native spacing at each strategy scope', () =>
   withBuiltDomFixture(
     build,
-    new URL('../../../tests/fixtures/layout-density.ts', import.meta.url),
+    new URL('./fixtures/layout-density.ts', import.meta.url),
     async ({ mountDensity }) => {
       const expected = ['0.5rem', '1rem', '1.5rem']
       const example = await mountDensity()
@@ -188,7 +188,7 @@ test('layout density uses the native spacing at each strategy scope', () =>
 test('collection footer slots follow the native DOM order', () =>
   withBuiltDomFixture(
     build,
-    new URL('../../../tests/fixtures/collection-footer.ts', import.meta.url),
+    new URL('./fixtures/collection-footer.ts', import.meta.url),
     async ({ mountCollectionFooter }) => {
       const example = await mountCollectionFooter()
       try {
@@ -208,7 +208,7 @@ test('collection footer slots follow the native DOM order', () =>
 test('table cell alignment uses physical direction after RTL changes', () =>
   withBuiltDomFixture(
     build,
-    new URL('../../../tests/fixtures/table-sizing.ts', import.meta.url),
+    new URL('./fixtures/table-sizing.ts', import.meta.url),
     async ({ mountSizing }, window) => {
       Object.defineProperty(window.HTMLElement.prototype, 'clientWidth', {
         get: () => 800,

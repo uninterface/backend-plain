@@ -9,9 +9,9 @@
     "skipLibCheck": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist/package/types",
     "types": ["vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "testing/index.ts"]
 }

@@ -64,6 +64,7 @@ jobs:
           CONSUMER_DIR: ${{ runner.temp }}/plain-consumer
         run: |
           core_version=$(node -p 'require("./package.json").devDependencies["@uninterface/uninterface"]')
+          testing_version=$(node -p 'require("./package.json").devDependencies["@uninterface/testing"]')
           mkdir -p "$CONSUMER_DIR"
           cp -R tests/package-consumer/. "$CONSUMER_DIR/"
           cp "$PACK_DIR/backend-plain.tgz" "$CONSUMER_DIR/"
@@ -71,7 +72,10 @@ jobs:
           npm pkg set "dependencies.@uninterface/uninterface=$core_version"
           npm install --ignore-scripts --no-audit --no-fund --registry https://registry.npmjs.org/
           npm ls @uninterface/uninterface vue --all
+          test ! -d node_modules/@uninterface/testing
           npm run check
+          npm install --save-dev --save-exact "@uninterface/testing@$testing_version" --ignore-scripts --no-audit --no-fund --registry https://registry.npmjs.org/
+          node --input-type=module -e 'await import("@uninterface/backend/testing"); await import("@uninterface/backend/testing/dom")'
       - name: Rehearse publication and record integrity
         env:
           NPM_DIST_TAG: ${{ steps.version.outputs.dist-tag }}

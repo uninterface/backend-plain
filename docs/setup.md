@@ -14,7 +14,7 @@ Plain ships compiled ES modules and TypeScript declarations. Core and Vue are pe
 npm install @uninterface/uninterface@0.0.2 @uninterface/backend@npm:@uninterface/backend-plain@0.0.2
 ```
 
-For local source development, resolve `@uninterface/backend` to the Plain checkout and use a matching Core checkout. The shared development workspace supplies `@uninterface/testing` and `@uninterface/fonts` for backend development tests.
+For source development, see the [package build](package-build.md) and [native test instructions](testing.md#run-the-backends-native-tests). Install this checkout's development dependencies with `npm ci`.
 
 ## Configure Vite
 

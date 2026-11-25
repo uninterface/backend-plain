@@ -8,7 +8,7 @@ import {
   fieldGroupParts,
   fieldSelectors,
 } from './presentation-parts.mjs'
-import { presentationParts } from './presentation-parts'
+import { presentationParts } from './browser-presentation-parts'
 
 export const uiTestAdapter: UiTestAdapter = {
   ...presentationParts,

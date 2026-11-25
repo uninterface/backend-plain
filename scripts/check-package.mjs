@@ -35,7 +35,7 @@ for (const [name, entry] of Object.entries(manifest.exports)) {
   }
 
   assert.match(entry.import, /^\.\/esm\/.+\.js$/)
-  assert.match(entry.types, /^\.\/types\/.+\.d\.ts$/)
+  assert.match(entry.types, /^\.\/types\/.+\.d\.m?ts$/)
   for (const target of [entry.import, entry.types]) {
     for (const path of name.includes('*')
       ? views.map((view) => target.replace('*', view))
@@ -45,7 +45,11 @@ for (const [name, entry] of Object.entries(manifest.exports)) {
   }
 }
 
-for (const path of files) assert.doesNotMatch(path, /^src\//)
+assert.equal(manifest.uninterface, undefined)
+assert.ok(manifest.peerDependenciesMeta['@uninterface/testing'].optional)
+for (const path of files)
+  assert.doesNotMatch(path, /^(src|testing)\/|\.(?:test|spec)\.[^.]+$/)
+
 const iconPath = 'esm/UiIcon.vue.js'
 const icon = readFileSync(new URL(iconPath, distribution), 'utf8')
 const style = icon.match(/^import "(.*\.css)";/m)?.[1]

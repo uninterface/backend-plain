@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { cp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
+import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { posix } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import vue from '@vitejs/plugin-vue'
@@ -9,10 +9,19 @@ const root = new URL('../', import.meta.url)
 const source = new URL('src/', root)
 const destination = new URL('dist/package/', root)
 const manifest = JSON.parse(await readFile(new URL('package.json', root)))
-const { scripts, devDependencies, ...distribution } = manifest
+const { scripts, devDependencies, uninterface, ...distribution } = manifest
 const exports = { ...manifest.exports }
 const entries = {}
 for (const [name, target] of Object.entries(manifest.exports)) {
+  if (target.startsWith('./testing/')) {
+    const module = target.slice(2).replace(/\.(ts|mjs)$/, '')
+    exports[name] = {
+      types: `./types/${module}${target.endsWith('.mjs') ? '.d.mts' : '.d.ts'}`,
+      import: `./esm/${module}.js`,
+    }
+    entries[module] = fileURLToPath(new URL(target, root))
+    continue
+  }
   if (!target.startsWith('./src/')) continue
   const path = target.slice('./src/'.length)
   if (path.endsWith('.css')) {
@@ -22,7 +31,7 @@ for (const [name, target] of Object.entries(manifest.exports)) {
 
   const module = path.replace(/\.ts$/, '')
   exports[name] = {
-    types: `./types/${module}.d.ts`,
+    types: `./types/src/${module}.d.ts`,
     import: `./esm/${module}.js`,
   }
   if (!module.includes('*')) {
@@ -74,7 +83,7 @@ await build({
     cssCodeSplit: true,
     minify: false,
     rollupOptions: {
-      external: /^(vue|@uninterface\/uninterface)(\/|$)/,
+      external: /^(vue|@uninterface\/(uninterface|testing))(\/|$)/,
       output: {
         preserveModules: true,
         preserveModulesRoot: fileURLToPath(source),
@@ -94,13 +103,15 @@ execFileSync(
   { stdio: 'inherit' },
 )
 
-for (const path of [
-  'README.md',
-  'LICENSE',
-  'capabilities.json',
-  'docs',
-  'testing',
-]) {
+await mkdir(new URL('types/testing/', destination), { recursive: true })
+for (const file of ['dom.d.mts', 'presentation-parts.d.mts']) {
+  await cp(
+    new URL(`testing/${file}`, root),
+    new URL(`types/testing/${file}`, destination),
+  )
+}
+
+for (const path of ['README.md', 'LICENSE', 'capabilities.json', 'docs']) {
   await cp(new URL(path, root), new URL(path, destination), { recursive: true })
 }
 for (const file of await readdir(source)) {
@@ -108,14 +119,7 @@ for (const file of await readdir(source)) {
     await cp(new URL(file, source), new URL(file, destination))
   }
 }
-distribution.files = [
-  'esm/',
-  'types/',
-  '*.css',
-  'capabilities.json',
-  'docs/',
-  'testing/',
-]
+distribution.files = ['esm/', 'types/', '*.css', 'capabilities.json', 'docs/']
 distribution.exports = exports
 await writeFile(
   new URL('package.json', destination),
