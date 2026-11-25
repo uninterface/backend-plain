@@ -10,7 +10,7 @@ npm pack ./dist/package
 
 The build writes compiled ES modules, Vue-aware declarations, styles, capability metadata and documentation to `dist/package`. Each public `.vue` subpath resolves to its own JavaScript entry and declaration. The build preserves per-component CSS imports and shares Vue and Core with the application through peer dependencies.
 
-The [publish workflow](../.github/workflows/publish.yml) checks the packed export targets and installs the tarball under `@uninterface/backend` in a fresh Vue/Vite consumer to verify type checking and the production build. Use the [application setup guide](setup.md) to try the package in your own app.
+The publish workflow in `.github/workflows/publish.yml` checks the packed export targets and installs the tarball under `@uninterface/backend` in a fresh Vue/Vite consumer to verify type checking and the production build. Use the [application setup guide](setup.md) to try the package in your own app.
 
 ## Release from a Git tag
 
