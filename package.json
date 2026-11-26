@@ -7,6 +7,9 @@
     "url": "git+https://github.com/uninterface/backend-plain.git"
   },
   "type": "module",
+  "engines": {
+    "node": "^24.0.0 || ^26.0.0"
+  },
   "files": [
     "capabilities.json",
     "docs/",
@@ -41,7 +44,7 @@
   },
   "peerDependencies": {
     "@uninterface/uninterface": "~0.0.2",
-    "vue": "^3.5.43",
+    "vue": "^3.5.18",
     "@uninterface/testing": "~0.0.2"
   },
   "description": "Minimal accessible reference presentation for Uninterface.",
@@ -52,7 +55,7 @@
     "@vitejs/plugin-vue": "6.0.10",
     "jsdom": "27.4.0",
     "typescript": "5.9.3",
-    "vite": "7.3.7",
+    "vite": "7.3.8",
     "vue": "3.5.43",
     "vue-tsc": "3.1.1",
     "@uninterface/testing": "0.0.2"
