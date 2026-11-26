@@ -39,7 +39,7 @@ Supported temporal values use native HTML date/time/datetime-local inputs; expli
 
 Color mode uses data-ui-color-mode and follows system appearance absent an explicit host selector. Default font is Inter Variable. Clear uses Lucide eraser; more-vertical uses ellipsis-vertical; menu-item reuses file with an independent key.
 
-The workspace's automated WCAG AA and contrast gate applies to Plain only, in its backend browser suite. This does not establish blanket conformance or remove keyboard, naming, state, feedback and focus obligations from other implementations. Browser geometry and assistive-technology acceptance remain separately recorded.
+The Plain source checkout includes automated accessibility checks in its [native browser suite](testing.md#run-the-backends-native-tests). Also verify keyboard interaction, accessible names and feedback, focus appearance, geometry and assistive-technology behavior in the application.
 
 See [presentation](presentation.md), [strategy support](strategies.md), [collections](collections.md), [typography](typography.md) and [customization](customization.md).
 
