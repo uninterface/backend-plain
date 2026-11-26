@@ -4,7 +4,7 @@
   import { useUiZView } from '@uninterface/uninterface/backend'
   useUiZView()
 
-  import { provide, ref } from 'vue'
+  import { computed, provide, ref } from 'vue'
   import { checkableLayoutKey } from './fieldLayout'
   import FieldFailureTooltip from './FieldFailureTooltip.vue'
   import { useFieldFeedbackDelay } from './fieldFeedback'
@@ -46,6 +46,7 @@
     },
   )
   const policy = useUiFieldStrategies(() => props.binding, {
+    ...{ feedbackRoot: element },
     help: 'together',
     failureModes: ['show-below', 'show-tooltip'],
     labels: (value) =>
@@ -54,10 +55,24 @@
         : (!checkableCount.value || Boolean(props.binding.group)) &&
           (value === 'above' || (!props.binding.group && value === 'beside')),
   })
-  const { deferred: deferFeedback, previousHelp } = useFieldFeedbackDelay(
-    element,
-    () => policy.value.issue,
-    () => policy.value.showHelp,
+  // Use Plain's feedback timing when Core's field policy lacks it.
+  const fallback =
+    'inlineFeedbackDeferred' in policy.value
+      ? undefined
+      : useFieldFeedbackDelay(
+          element,
+          () => policy.value.issue,
+          () => policy.value.showHelp,
+        )
+  const deferFeedback = computed(() =>
+    'inlineFeedbackDeferred' in policy.value
+      ? policy.value.inlineFeedbackDeferred === true
+      : fallback?.deferred.value === true,
+  )
+  const showHelp = computed(() =>
+    fallback?.deferred.value
+      ? fallback.previousHelp.value
+      : policy.value.showHelp,
   )
 </script>
 <template>
@@ -142,7 +157,7 @@
       <slot />
     </FieldFailureTooltip>
     <p
-      v-if="deferFeedback ? previousHelp : policy.showHelp"
+      v-if="showHelp"
       :id="`${binding.id}-help`"
       class="plain-help"
     >
