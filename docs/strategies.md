@@ -62,16 +62,22 @@ uiCardPresentation configures all five level treatments independently of uiHiera
 
 ## Layout density
 
-UiLayout, UiFlowLayout and UiGridLayout support `uiLayoutDensity(-1 | 0 | 1)` for peer separation. -1 maps to `0.5rem`; 0 preserves `1rem`; 1 maps to `1.5rem`. These are backend fulfillment values, not business-author inputs. Zero/no answer uses the original default; supported conflicting answers retain that default. Both grid axes use the selected spacing. Native tokens/classes remain application-theme controlled where used.
+UiLayout, UiFlowLayout, UiGridLayout and UiStartEndLayout support `uiLayoutDensity(-1 | 0 | 1)` for peer separation. -1 maps to `0.5rem`; 0 preserves `1rem`; 1 maps to `1.5rem`. These are backend fulfillment values, not business-author inputs. Zero/no answer uses the original default; supported conflicting answers retain that default. Both grid axes use the selected spacing. Native tokens/classes remain application-theme controlled where used.
 
 Density does not resize controls, change typography or content padding, or separate UiRegionLayout allocations. Nested layouts honor logical targets, depth, stopAt and query barriers without inherited CSS density. See `@uninterface/uninterface` documentation at `docs/guides/layout-density.md`. Shared DOM tests verify all levels, restoration, scoped barriers and retained input state/focus; browser geometry is a separate acceptance check.
+
+UiSpacer in UiFlowLayout preserves the selected peer gap
+(`layout.flow-spacer.v1`). Input-frame spacers require `input.frame.sizing.v1`.
+
+UiStartEndLayout uses the selected gap both between groups on the same row
+and between rows when they wrap. With `layout.start-end.v1`, each group
+keeps its logical edge on the row it occupies.
 
 ### Checkable-control labels
 
 UiCheckbox and UiSwitch use the checkable presentation strategy: adapt by default, or explicit flushed/control-aligned/separated. Adapt first resolves effective ordinary label placement, including reactive native defaults, general values and unsupported requests. It then selects control-aligned for effective beside placement or flushed otherwise. Explicit modes select their own arrangement independently of ordinary placement support. All standalone labels and group titles remain visible under hidden. Radio/checkbox option labels remain adjacent; control-aligned/separated group headings occupy the label area. Separated standalone labels use the outer field label and preserve native input association. Layout columns stack below 40rem; standalone labels stay adjacent in flushed/control-aligned modes. In control-aligned mode, field descriptions and below-control feedback begin at the control area/check control, rather than the adjacent label; adapt uses this rule whenever it resolves to control-aligned, including narrow stacking. Flushed standalone descriptions retain label-text alignment. Size, markers and values retain their own behavior.
 
 This implements the shared checkable-control presentation modes. Verify all label modes and restoration, required markers, value/focus retention and label activation; browser checks must also cover narrow/wide widths, wrapping and RTL. DOM integration checks alone do not establish visual geometry.
-
 
 ## Button width
 

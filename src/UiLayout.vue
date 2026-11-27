@@ -5,7 +5,12 @@
   useUiZView()
 
   import { computed, type CSSProperties } from 'vue'
-  import { useUiLayoutResizeView } from '@uninterface/uninterface/backend'
+  import {
+    flowSpacerItemStyle,
+    flowSpacerLayoutStyle,
+    startEndLayoutItemStyle,
+    useUiLayoutResizeView,
+  } from '@uninterface/uninterface/backend'
   import { uiFocusPresentation } from './focus'
   import type { UiLayoutViewBinding } from '@uninterface/uninterface/backend'
   import { uiLayoutPresentation } from './layout'
@@ -87,6 +92,7 @@
       height: b.height === 'full' ? '100%' : 'auto',
       overflowX: scrolling ? 'auto' : 'visible',
       overflowY: scrolling ? 'auto' : 'visible',
+      ...flowSpacerLayoutStyle(b),
     }
   })
 </script>
@@ -121,12 +127,15 @@
         class="plain-layout-item"
         :data-layout-region="binding.framing ? key : undefined"
         :data-raised="binding.framing?.regions[key]?.raised || undefined"
+        :data-ui-flow-spacer="binding.spacers?.includes(key) || undefined"
+        :aria-hidden="binding.spacers?.includes(key) || undefined"
         :style="
           binding.framing
             ? {
                 position: 'relative',
               }
-            : undefined
+            : (startEndLayoutItemStyle(binding, key) ??
+              flowSpacerItemStyle(binding, key, spacing.gap ?? '0px'))
         "
       >
         <slot :name="key" />
