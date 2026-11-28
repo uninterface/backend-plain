@@ -22,6 +22,15 @@ Fields retain help text alongside validation feedback, but allocate no empty fee
 
 `UiLayout.vue` fulfills `layout.linear.v1`, `layout.division.v1`, `layout.reactive.v1`, `layout.wrap.v1`, `layout.align.v1`, and `layout.scroll.v1`. It consumes resolved options from core, allocates keyed children, preserves them during prop updates, and supplies backend spacing and scroll focus treatment. It works without a provider ancestor and never detects desktop/mobile itself. See **UiLayout** in `@uninterface/uninterface` (`docs/api/components/UiLayout.md`) for exact supported combinations and host-height requirements. Browser geometry verification is required in addition to declarations and DOM tests.
 
+### Avatars
+
+`UiAvatar` supplies `avatar.v1`. An explicit `px` or `em` size sets both
+dimensions. Otherwise the avatar follows the scoped control-size strategy.
+The adapter uses a native image and a theme-colored fallback surface. Its
+neutral diameter is 3.25 times the fallback font size (45.5px with 14px text).
+The other steps add or subtract 0.5rem or 1rem from that diameter. Plain's text
+and surface tokens also apply in dark mode.
+
 ### Layout separators
 
 `UiLayout.vue` supplies `layout.separator.v1` for `UiSeparator`. It paints a
